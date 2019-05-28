@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2018-01-25T05:06:23Z"
+  labels:
+    heritage: deis
+  name: snippets-prod
+  resourceVersion: "1172917"
+  selfLink: /api/v1/namespaces/snippets-prod
+  uid: 7cccb7b8-018d-11e8-8c8b-0656fabf84c0
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active
