@@ -1,0 +1,92 @@
+deploy frankfurt dev:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
+  tags:
+    - aws
+    - frankfurt
+    - meao
+  only:
+    - master
+    - frankfurt
+  script:
+    - kubectl_1.11 apply -f frankfurt/snippets-dev
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f frankfurt/snippets-dev/deploy.yaml -w
+
+deploy oregon-b dev:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+  tags:
+    - aws
+    - meao
+  only:
+    - master
+    - oregon-b
+  script:
+    - kubectl_1.11 apply -f oregon-b/snippets-dev
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml -w
+
+deploy frankfurt stage:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
+  tags:
+    - aws
+    - frankfurt
+    - meao
+  only:
+    - master
+    - frankfurt
+    - stage
+  script:
+    - kubectl_1.11 apply -f frankfurt/snippets-stage
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f frankfurt/snippets-stage/deploy.yaml -w
+
+deploy oregon-b stage:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+  tags:
+    - aws
+    - meao
+  only:
+    - master
+    - oregon-b
+    - stage
+  script:
+    - kubectl_1.11 apply -f oregon-b/snippets-stage
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f oregon-b/snippets-stage/deploy.yaml -w
+
+deploy frankfurt prod:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
+  tags:
+    - aws
+    - frankfurt
+    - meao
+  only:
+    - master
+    - frankfurt
+    - prod
+    - frankfurt-prod
+  script:
+    - kubectl_1.11 apply -f frankfurt/snippets-prod
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f frankfurt/snippets-prod/deploy.yaml -w
+
+deploy oregon-b prod:
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+  tags:
+    - aws
+    - meao
+  only:
+    - master
+    - oregon-b
+    - prod
+    - oregon-b-prod
+  script:
+    - kubectl_1.11 apply -f oregon-b/snippets-prod
+    # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml -w
