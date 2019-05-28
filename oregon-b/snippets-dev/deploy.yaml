@@ -16,7 +16,6 @@ items:
     selector:
       matchLabels:
         app: snippets-dev
-        heritage: deis
         type: clock
     strategy:
       rollingUpdate:
@@ -28,7 +27,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-dev
-          heritage: deis
           type: clock
           version: v157
         name: snippets-dev-clock
@@ -268,7 +266,6 @@ items:
     creationTimestamp: null
     labels:
       app: snippets-dev
-      heritage: deis
       type: web
     name: snippets-dev-web
     namespace: snippets-dev
@@ -290,7 +287,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-dev
-          heritage: deis
           type: web
           version: v157
         name: snippets-dev-web

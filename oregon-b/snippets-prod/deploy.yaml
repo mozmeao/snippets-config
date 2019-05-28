@@ -3,20 +3,12 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      deployment.kubernetes.io/revision: "24"
-      kubernetes.io/change-cause: jenkins deployed mozorg/snippets:979478
-    creationTimestamp: "2019-03-27T08:54:21Z"
-    generation: 24
+    creationTimestamp: null
     labels:
       app: snippets-prod
-      heritage: deis
       type: clock
     name: snippets-prod-clock
     namespace: snippets-prod
-    resourceVersion: "119896384"
-    selfLink: /apis/extensions/v1beta1/namespaces/snippets-prod/deployments/snippets-prod-clock
-    uid: e9fcc2ad-506d-11e9-ad82-0672f722a7fa
   spec:
     progressDeadlineSeconds: 600
     replicas: 0
@@ -24,7 +16,6 @@ items:
     selector:
       matchLabels:
         app: snippets-prod
-        heritage: deis
         type: clock
     strategy:
       rollingUpdate:
@@ -36,7 +27,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-prod
-          heritage: deis
           type: clock
           version: v121
         name: snippets-prod-clock
@@ -290,38 +280,15 @@ items:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-  status:
-    conditions:
-    - lastTransitionTime: "2019-03-27T08:54:21Z"
-      lastUpdateTime: "2019-03-27T08:54:21Z"
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - lastTransitionTime: "2019-04-10T10:02:50Z"
-      lastUpdateTime: "2019-05-24T08:26:04Z"
-      message: ReplicaSet "snippets-prod-clock-85889846d8" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-    observedGeneration: 24
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      deployment.kubernetes.io/revision: "115"
-      kubernetes.io/change-cause: jenkins deployed mozorg/snippets:979478
-    creationTimestamp: "2018-01-25T05:06:27Z"
-    generation: 55220
+    creationTimestamp: null
     labels:
       app: snippets-prod
-      heritage: deis
       type: web
     name: snippets-prod-web
     namespace: snippets-prod
-    resourceVersion: "119896723"
-    selfLink: /apis/extensions/v1beta1/namespaces/snippets-prod/deployments/snippets-prod-web
-    uid: 7f43f0b5-018d-11e8-8c8b-0656fabf84c0
   spec:
     progressDeadlineSeconds: 600
     replicas: 6
@@ -329,7 +296,6 @@ items:
     selector:
       matchLabels:
         app: snippets-prod
-        heritage: deis
         type: web
     strategy:
       rollingUpdate:
@@ -341,7 +307,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-prod
-          heritage: deis
           type: web
           version: v121
         name: snippets-prod-web
@@ -609,25 +574,6 @@ items:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-  status:
-    availableReplicas: 6
-    conditions:
-    - lastTransitionTime: "2019-05-22T07:59:19Z"
-      lastUpdateTime: "2019-05-22T07:59:19Z"
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - lastTransitionTime: "2019-04-08T18:40:59Z"
-      lastUpdateTime: "2019-05-24T08:26:56Z"
-      message: ReplicaSet "snippets-prod-web-788b746468" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-    observedGeneration: 55220
-    readyReplicas: 6
-    replicas: 6
-    updatedReplicas: 6
 kind: List
 metadata:
   resourceVersion: ""
