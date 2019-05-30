@@ -3,20 +3,12 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      deployment.kubernetes.io/revision: "130"
-      kubernetes.io/change-cause: jenkins deployed mozorg/snippets:979478
-    creationTimestamp: "2018-04-17T20:27:41Z"
-    generation: 132
+    creationTimestamp: null
     labels:
       app: snippets-admin
-      heritage: deis
       type: clock
     name: snippets-admin-clock
     namespace: snippets-admin
-    resourceVersion: "119896200"
-    selfLink: /apis/extensions/v1beta1/namespaces/snippets-admin/deployments/snippets-admin-clock
-    uid: c73b5624-427d-11e8-8eeb-0656fabf84c0
   spec:
     progressDeadlineSeconds: 600
     replicas: 1
@@ -24,7 +16,6 @@ items:
     selector:
       matchLabels:
         app: snippets-admin
-        heritage: deis
         type: clock
     strategy:
       rollingUpdate:
@@ -36,7 +27,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-admin
-          heritage: deis
           type: clock
           version: v140
         name: snippets-admin-clock
@@ -340,42 +330,16 @@ items:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-  status:
-    availableReplicas: 1
-    conditions:
-    - lastTransitionTime: "2019-04-08T19:56:16Z"
-      lastUpdateTime: "2019-04-08T19:56:16Z"
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - lastTransitionTime: "2019-04-08T18:41:08Z"
-      lastUpdateTime: "2019-05-24T08:25:16Z"
-      message: ReplicaSet "snippets-admin-clock-b88b97588" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-    observedGeneration: 132
-    readyReplicas: 1
-    replicas: 1
-    updatedReplicas: 1
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      deployment.kubernetes.io/revision: "138"
-      kubernetes.io/change-cause: jenkins deployed mozorg/snippets:979478
-    creationTimestamp: "2018-01-25T05:08:14Z"
+    creationTimestamp: null
     generation: 225
     labels:
       app: snippets-admin
-      heritage: deis
       type: web
     name: snippets-admin-web
     namespace: snippets-admin
-    resourceVersion: "119896240"
-    selfLink: /apis/extensions/v1beta1/namespaces/snippets-admin/deployments/snippets-admin-web
-    uid: bf7c2c7e-018d-11e8-8c8b-0656fabf84c0
   spec:
     progressDeadlineSeconds: 600
     replicas: 3
@@ -383,7 +347,6 @@ items:
     selector:
       matchLabels:
         app: snippets-admin
-        heritage: deis
         type: web
     strategy:
       rollingUpdate:
@@ -395,7 +358,6 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-admin
-          heritage: deis
           type: web
           version: v140
         name: snippets-admin-web
@@ -713,25 +675,6 @@ items:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-  status:
-    availableReplicas: 3
-    conditions:
-    - lastTransitionTime: "2019-04-08T20:00:37Z"
-      lastUpdateTime: "2019-04-08T20:00:37Z"
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - lastTransitionTime: "2019-04-08T18:41:00Z"
-      lastUpdateTime: "2019-05-24T08:25:23Z"
-      message: ReplicaSet "snippets-admin-web-6d4b6f95fb" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-    observedGeneration: 225
-    readyReplicas: 3
-    replicas: 3
-    updatedReplicas: 3
 kind: List
 metadata:
   resourceVersion: ""
