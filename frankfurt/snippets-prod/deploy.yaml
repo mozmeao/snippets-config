@@ -281,7 +281,7 @@ items:
     creationTimestamp: null
     labels:
       app: snippets-prod
-      type: web
+      type: test
     name: snippets-prod-web
     namespace: snippets-prod
   spec:
@@ -291,7 +291,7 @@ items:
     selector:
       matchLabels:
         app: snippets-prod
-        type: web
+        type: test
     strategy:
       rollingUpdate:
         maxSurge: 10
@@ -302,7 +302,7 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-prod
-          type: web
+          type: test
           version: v211
         name: snippets-prod-web
         namespace: snippets-prod

@@ -337,7 +337,7 @@ items:
     generation: 225
     labels:
       app: snippets-admin
-      type: web
+      type: test
     name: snippets-admin-web
     namespace: snippets-admin
   spec:
@@ -347,7 +347,7 @@ items:
     selector:
       matchLabels:
         app: snippets-admin
-        type: web
+        type: test
     strategy:
       rollingUpdate:
         maxSurge: 3
@@ -358,7 +358,7 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-admin
-          type: web
+          type: test
           version: v140
         name: snippets-admin-web
         namespace: snippets-admin
