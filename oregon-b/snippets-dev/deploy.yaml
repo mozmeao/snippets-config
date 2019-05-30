@@ -266,7 +266,7 @@ items:
     creationTimestamp: null
     labels:
       app: snippets-dev
-      type: web
+      type: test
     name: snippets-dev-web
     namespace: snippets-dev
   spec:
@@ -276,7 +276,7 @@ items:
     selector:
       matchLabels:
         app: snippets-dev
-        type: web
+        type: test
     strategy:
       rollingUpdate:
         maxSurge: 2
@@ -287,7 +287,7 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-dev
-          type: web
+          type: test
           version: v157
         name: snippets-dev-web
         namespace: snippets-dev

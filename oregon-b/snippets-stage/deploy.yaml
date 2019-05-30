@@ -326,7 +326,7 @@ items:
     creationTimestamp: null
     labels:
       app: snippets-stage
-      type: web
+      type: test
     name: snippets-stage-web
     namespace: snippets-stage
   spec:
@@ -336,7 +336,7 @@ items:
     selector:
       matchLabels:
         app: snippets-stage
-        type: web
+        type: test
     strategy:
       rollingUpdate:
         maxSurge: 3
@@ -347,7 +347,7 @@ items:
         creationTimestamp: null
         labels:
           app: snippets-stage
-          type: web
+          type: test
           version: v191
         name: snippets-stage-web
         namespace: snippets-stage
