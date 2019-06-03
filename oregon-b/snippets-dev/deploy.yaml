@@ -249,7 +249,7 @@ items:
               secretKeyRef:
                 key: workflow-release-summary
                 name: snippets-dev-v157-env
-          image: 127.0.0.1:5555/snippets-dev:v157
+          image: mozmeao/nucleus:671d23b918a1cb7db97852df757c0033d7f9cf9b
           imagePullPolicy: IfNotPresent
           name: snippets-dev-clock
           resources: {}
@@ -509,7 +509,7 @@ items:
               secretKeyRef:
                 key: workflow-release-summary
                 name: snippets-dev-v157-env
-          image: 127.0.0.1:5555/snippets-dev:v157
+          image: mozmeao/nucleus:671d23b918a1cb7db97852df757c0033d7f9cf9b
           imagePullPolicy: IfNotPresent
           name: snippets-dev-web
           readinessProbe:
