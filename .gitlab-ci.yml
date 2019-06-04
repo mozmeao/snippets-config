@@ -12,7 +12,7 @@ deploy oregon-b dev:
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-dev
     # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml -w
+    - kubectl_1.11 rollout status -n snippets-dev deploy snippets-dev-web
 
 deploy oregon-b stage:
   variables:
