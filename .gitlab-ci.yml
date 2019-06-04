@@ -1,20 +1,3 @@
-deploy frankfurt dev:
-  variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
-  tags:
-    - aws
-    - frankfurt
-    - meao
-  only:
-    - dev
-    - frankfurt
-    - frankfurt-dev
-    - master
-  script:
-    - kubectl_1.11 apply -f frankfurt/snippets-dev
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f frankfurt/snippets-dev/deploy.yaml -w
-
 deploy oregon-b dev:
   variables:
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
@@ -30,22 +13,6 @@ deploy oregon-b dev:
     - kubectl_1.11 apply -f oregon-b/snippets-dev
     # --timeout requires kubectl 1.12+
     - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml -w
-
-deploy frankfurt stage:
-  variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
-  tags:
-    - aws
-    - frankfurt
-    - meao
-  only:
-    - frankfurt
-    - frankfurt-stage
-    - stage
-  script:
-    - kubectl_1.11 apply -f frankfurt/snippets-stage
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f frankfurt/snippets-stage/deploy.yaml -w
 
 deploy oregon-b stage:
   variables:
