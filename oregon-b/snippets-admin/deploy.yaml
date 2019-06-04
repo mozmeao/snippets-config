@@ -1,351 +1,345 @@
-apiVersion: v1
-items:
-- apiVersion: extensions/v1beta1
-  kind: Deployment
-  metadata:
-    creationTimestamp: null
-    generation: 225
-    labels:
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  generation: 225
+  labels:
+    app: snippets-admin
+    type: test
+  name: snippets-admin-web
+  namespace: snippets-admin
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
       app: snippets-admin
       type: test
-    name: snippets-admin-web
-    namespace: snippets-admin
-  spec:
-    progressDeadlineSeconds: 600
-    replicas: 3
-    revisionHistoryLimit: 10
-    selector:
-      matchLabels:
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
         app: snippets-admin
         type: test
-    strategy:
-      rollingUpdate:
-        maxSurge: 3
-        maxUnavailable: 0
-      type: RollingUpdate
-    template:
-      metadata:
-        creationTimestamp: null
-        labels:
-          app: snippets-admin
-          type: test
-          version: v140
+        version: v140
+      name: snippets-admin-web
+      namespace: snippets-admin
+    spec:
+      containers:
+      - args:
+        - ./bin/run-prod.sh
+        command:
+        - /bin/bash
+        - -c
+        env:
+        - name: ALLOWED_CIDR_NETS
+          valueFrom:
+            secretKeyRef:
+              key: allowed-cidr-nets
+              name: snippets-admin-v140-env
+        - name: ALLOWED_HOSTS
+          valueFrom:
+            secretKeyRef:
+              key: allowed-hosts
+              name: snippets-admin-v140-env
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: aws-access-key-id
+              name: snippets-admin-v140-env
+        - name: AWS_S3_HOST
+          valueFrom:
+            secretKeyRef:
+              key: aws-s3-host
+              name: snippets-admin-v140-env
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: aws-secret-access-key
+              name: snippets-admin-v140-env
+        - name: AWS_STORAGE_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              key: aws-storage-bucket-name
+              name: snippets-admin-v140-env
+        - name: BUNDLE_BROTLI_COMPRESS
+          valueFrom:
+            secretKeyRef:
+              key: bundle-brotli-compress
+              name: snippets-admin-v140-env
+        - name: CACHALOT_ENABLED
+          valueFrom:
+            secretKeyRef:
+              key: cachalot-enabled
+              name: snippets-admin-v140-env
+        - name: CACHE_URL
+          valueFrom:
+            secretKeyRef:
+              key: cache-url
+              name: snippets-admin-v140-env
+        - name: CDN_URL
+          valueFrom:
+            secretKeyRef:
+              key: cdn-url
+              name: snippets-admin-v140-env
+        - name: CSP_REPORT_ENABLE
+          valueFrom:
+            secretKeyRef:
+              key: csp-report-enable
+              name: snippets-admin-v140-env
+        - name: CSP_REPORT_ONLY
+          valueFrom:
+            secretKeyRef:
+              key: csp-report-only
+              name: snippets-admin-v140-env
+        - name: CSV_EXPORT_ROOT
+          valueFrom:
+            secretKeyRef:
+              key: csv-export-root
+              name: snippets-admin-v140-env
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: database-url
+              name: snippets-admin-v140-env
+        - name: DEAD_MANS_SNITCH_CSV_EXPORT
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-csv-export
+              name: snippets-admin-v140-env
+        - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-disable-snippets
+              name: snippets-admin-v140-env
+        - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-product-details
+              name: snippets-admin-v140-env
+        - name: DEBUG
+          valueFrom:
+            secretKeyRef:
+              key: debug
+              name: snippets-admin-v140-env
+        - name: DEIS_APP
+          valueFrom:
+            secretKeyRef:
+              key: deis-app
+              name: snippets-admin-v140-env
+        - name: DEIS_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              key: deis-domain
+              name: snippets-admin-v140-env
+        - name: ENABLE_ADMIN
+          valueFrom:
+            secretKeyRef:
+              key: enable-admin
+              name: snippets-admin-v140-env
+        - name: ENFORCE_HOST
+          valueFrom:
+            secretKeyRef:
+              key: enforce-host
+              name: snippets-admin-v140-env
+        - name: FILE_STORAGE
+          valueFrom:
+            secretKeyRef:
+              key: file-storage
+              name: snippets-admin-v140-env
+        - name: MEDIA_BUNDLES_ROOT
+          valueFrom:
+            secretKeyRef:
+              key: media-bundles-root
+              name: snippets-admin-v140-env
+        - name: MEDIA_ICONS_ROOT
+          valueFrom:
+            secretKeyRef:
+              key: media-icons-root
+              name: snippets-admin-v140-env
+        - name: METRICS_SAMPLE_RATE
+          valueFrom:
+            secretKeyRef:
+              key: metrics-sample-rate
+              name: snippets-admin-v140-env
+        - name: NEW_RELIC_APP_NAME
+          valueFrom:
+            secretKeyRef:
+              key: new-relic-app-name
+              name: snippets-admin-v140-env
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: new-relic-license-key
+              name: snippets-admin-v140-env
+        - name: OIDC_ENABLE
+          valueFrom:
+            secretKeyRef:
+              key: oidc-enable
+              name: snippets-admin-v140-env
+        - name: OIDC_OP_AUTHORIZATION_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              key: oidc-op-authorization-endpoint
+              name: snippets-admin-v140-env
+        - name: OIDC_OP_TOKEN_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              key: oidc-op-token-endpoint
+              name: snippets-admin-v140-env
+        - name: OIDC_OP_USER_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              key: oidc-op-user-endpoint
+              name: snippets-admin-v140-env
+        - name: OIDC_RP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-id
+              name: snippets-admin-v140-env
+        - name: OIDC_RP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-secret
+              name: snippets-admin-v140-env
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              key: port
+              name: snippets-admin-v140-env
+        - name: PROD_DETAILS_STORAGE
+          valueFrom:
+            secretKeyRef:
+              key: prod-details-storage
+              name: snippets-admin-v140-env
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: secret-key
+              name: snippets-admin-v140-env
+        - name: SECURE_BROWSER_XSS_FILTER
+          valueFrom:
+            secretKeyRef:
+              key: secure-browser-xss-filter
+              name: snippets-admin-v140-env
+        - name: SECURE_CONTENT_TYPE_NOSNIFF
+          valueFrom:
+            secretKeyRef:
+              key: secure-content-type-nosniff
+              name: snippets-admin-v140-env
+        - name: SECURE_HSTS_SECONDS
+          valueFrom:
+            secretKeyRef:
+              key: secure-hsts-seconds
+              name: snippets-admin-v140-env
+        - name: SECURE_SSL_REDIRECT
+          valueFrom:
+            secretKeyRef:
+              key: secure-ssl-redirect
+              name: snippets-admin-v140-env
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              key: sentry-dsn
+              name: snippets-admin-v140-env
+        - name: SENTRY_ENVIRONMENT
+          valueFrom:
+            secretKeyRef:
+              key: sentry-environment
+              name: snippets-admin-v140-env
+        - name: SITE_HEADER
+          valueFrom:
+            secretKeyRef:
+              key: site-header
+              name: snippets-admin-v140-env
+        - name: SITE_TITLE
+          valueFrom:
+            secretKeyRef:
+              key: site-title
+              name: snippets-admin-v140-env
+        - name: SITE_URL
+          valueFrom:
+            secretKeyRef:
+              key: site-url
+              name: snippets-admin-v140-env
+        - name: SLACK_ENABLE
+          valueFrom:
+            secretKeyRef:
+              key: slack-enable
+              name: snippets-admin-v140-env
+        - name: SLACK_WEBHOOK
+          valueFrom:
+            secretKeyRef:
+              key: slack-webhook
+              name: snippets-admin-v140-env
+        - name: SNIPPET_BUNDLE_TIMEOUT
+          valueFrom:
+            secretKeyRef:
+              key: snippet-bundle-timeout
+              name: snippets-admin-v140-env
+        - name: STATSD_CLIENT
+          valueFrom:
+            secretKeyRef:
+              key: statsd-client
+              name: snippets-admin-v140-env
+        - name: STATSD_HOST
+          valueFrom:
+            secretKeyRef:
+              key: statsd-host
+              name: snippets-admin-v140-env
+        - name: WORKFLOW_RELEASE
+          valueFrom:
+            secretKeyRef:
+              key: workflow-release
+              name: snippets-admin-v140-env
+        - name: WORKFLOW_RELEASE_CREATED_AT
+          valueFrom:
+            secretKeyRef:
+              key: workflow-release-created-at
+              name: snippets-admin-v140-env
+        - name: WORKFLOW_RELEASE_SUMMARY
+          valueFrom:
+            secretKeyRef:
+              key: workflow-release-summary
+              name: snippets-admin-v140-env
+        - name: WSGI_KEEP_ALIVE
+          valueFrom:
+            secretKeyRef:
+              key: wsgi-keep-alive
+              name: snippets-admin-v140-env
+        - name: WSGI_NUM_WORKERS
+          valueFrom:
+            secretKeyRef:
+              key: wsgi-num-workers
+              name: snippets-admin-v140-env
+        image: 127.0.0.1:5555/snippets-admin:v140
+        imagePullPolicy: IfNotPresent
         name: snippets-admin-web
-        namespace: snippets-admin
-      spec:
-        containers:
-        - args:
-          - ./bin/run-prod.sh
-          command:
-          - /bin/bash
-          - -c
-          env:
-          - name: ALLOWED_CIDR_NETS
-            valueFrom:
-              secretKeyRef:
-                key: allowed-cidr-nets
-                name: snippets-admin-v140-env
-          - name: ALLOWED_HOSTS
-            valueFrom:
-              secretKeyRef:
-                key: allowed-hosts
-                name: snippets-admin-v140-env
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                key: aws-access-key-id
-                name: snippets-admin-v140-env
-          - name: AWS_S3_HOST
-            valueFrom:
-              secretKeyRef:
-                key: aws-s3-host
-                name: snippets-admin-v140-env
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                key: aws-secret-access-key
-                name: snippets-admin-v140-env
-          - name: AWS_STORAGE_BUCKET_NAME
-            valueFrom:
-              secretKeyRef:
-                key: aws-storage-bucket-name
-                name: snippets-admin-v140-env
-          - name: BUNDLE_BROTLI_COMPRESS
-            valueFrom:
-              secretKeyRef:
-                key: bundle-brotli-compress
-                name: snippets-admin-v140-env
-          - name: CACHALOT_ENABLED
-            valueFrom:
-              secretKeyRef:
-                key: cachalot-enabled
-                name: snippets-admin-v140-env
-          - name: CACHE_URL
-            valueFrom:
-              secretKeyRef:
-                key: cache-url
-                name: snippets-admin-v140-env
-          - name: CDN_URL
-            valueFrom:
-              secretKeyRef:
-                key: cdn-url
-                name: snippets-admin-v140-env
-          - name: CSP_REPORT_ENABLE
-            valueFrom:
-              secretKeyRef:
-                key: csp-report-enable
-                name: snippets-admin-v140-env
-          - name: CSP_REPORT_ONLY
-            valueFrom:
-              secretKeyRef:
-                key: csp-report-only
-                name: snippets-admin-v140-env
-          - name: CSV_EXPORT_ROOT
-            valueFrom:
-              secretKeyRef:
-                key: csv-export-root
-                name: snippets-admin-v140-env
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                key: database-url
-                name: snippets-admin-v140-env
-          - name: DEAD_MANS_SNITCH_CSV_EXPORT
-            valueFrom:
-              secretKeyRef:
-                key: dead-mans-snitch-csv-export
-                name: snippets-admin-v140-env
-          - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
-            valueFrom:
-              secretKeyRef:
-                key: dead-mans-snitch-disable-snippets
-                name: snippets-admin-v140-env
-          - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
-            valueFrom:
-              secretKeyRef:
-                key: dead-mans-snitch-product-details
-                name: snippets-admin-v140-env
-          - name: DEBUG
-            valueFrom:
-              secretKeyRef:
-                key: debug
-                name: snippets-admin-v140-env
-          - name: DEIS_APP
-            valueFrom:
-              secretKeyRef:
-                key: deis-app
-                name: snippets-admin-v140-env
-          - name: DEIS_DOMAIN
-            valueFrom:
-              secretKeyRef:
-                key: deis-domain
-                name: snippets-admin-v140-env
-          - name: ENABLE_ADMIN
-            valueFrom:
-              secretKeyRef:
-                key: enable-admin
-                name: snippets-admin-v140-env
-          - name: ENFORCE_HOST
-            valueFrom:
-              secretKeyRef:
-                key: enforce-host
-                name: snippets-admin-v140-env
-          - name: FILE_STORAGE
-            valueFrom:
-              secretKeyRef:
-                key: file-storage
-                name: snippets-admin-v140-env
-          - name: MEDIA_BUNDLES_ROOT
-            valueFrom:
-              secretKeyRef:
-                key: media-bundles-root
-                name: snippets-admin-v140-env
-          - name: MEDIA_ICONS_ROOT
-            valueFrom:
-              secretKeyRef:
-                key: media-icons-root
-                name: snippets-admin-v140-env
-          - name: METRICS_SAMPLE_RATE
-            valueFrom:
-              secretKeyRef:
-                key: metrics-sample-rate
-                name: snippets-admin-v140-env
-          - name: NEW_RELIC_APP_NAME
-            valueFrom:
-              secretKeyRef:
-                key: new-relic-app-name
-                name: snippets-admin-v140-env
-          - name: NEW_RELIC_LICENSE_KEY
-            valueFrom:
-              secretKeyRef:
-                key: new-relic-license-key
-                name: snippets-admin-v140-env
-          - name: OIDC_ENABLE
-            valueFrom:
-              secretKeyRef:
-                key: oidc-enable
-                name: snippets-admin-v140-env
-          - name: OIDC_OP_AUTHORIZATION_ENDPOINT
-            valueFrom:
-              secretKeyRef:
-                key: oidc-op-authorization-endpoint
-                name: snippets-admin-v140-env
-          - name: OIDC_OP_TOKEN_ENDPOINT
-            valueFrom:
-              secretKeyRef:
-                key: oidc-op-token-endpoint
-                name: snippets-admin-v140-env
-          - name: OIDC_OP_USER_ENDPOINT
-            valueFrom:
-              secretKeyRef:
-                key: oidc-op-user-endpoint
-                name: snippets-admin-v140-env
-          - name: OIDC_RP_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                key: oidc-rp-client-id
-                name: snippets-admin-v140-env
-          - name: OIDC_RP_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: oidc-rp-client-secret
-                name: snippets-admin-v140-env
-          - name: PORT
-            valueFrom:
-              secretKeyRef:
-                key: port
-                name: snippets-admin-v140-env
-          - name: PROD_DETAILS_STORAGE
-            valueFrom:
-              secretKeyRef:
-                key: prod-details-storage
-                name: snippets-admin-v140-env
-          - name: SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                key: secret-key
-                name: snippets-admin-v140-env
-          - name: SECURE_BROWSER_XSS_FILTER
-            valueFrom:
-              secretKeyRef:
-                key: secure-browser-xss-filter
-                name: snippets-admin-v140-env
-          - name: SECURE_CONTENT_TYPE_NOSNIFF
-            valueFrom:
-              secretKeyRef:
-                key: secure-content-type-nosniff
-                name: snippets-admin-v140-env
-          - name: SECURE_HSTS_SECONDS
-            valueFrom:
-              secretKeyRef:
-                key: secure-hsts-seconds
-                name: snippets-admin-v140-env
-          - name: SECURE_SSL_REDIRECT
-            valueFrom:
-              secretKeyRef:
-                key: secure-ssl-redirect
-                name: snippets-admin-v140-env
-          - name: SENTRY_DSN
-            valueFrom:
-              secretKeyRef:
-                key: sentry-dsn
-                name: snippets-admin-v140-env
-          - name: SENTRY_ENVIRONMENT
-            valueFrom:
-              secretKeyRef:
-                key: sentry-environment
-                name: snippets-admin-v140-env
-          - name: SITE_HEADER
-            valueFrom:
-              secretKeyRef:
-                key: site-header
-                name: snippets-admin-v140-env
-          - name: SITE_TITLE
-            valueFrom:
-              secretKeyRef:
-                key: site-title
-                name: snippets-admin-v140-env
-          - name: SITE_URL
-            valueFrom:
-              secretKeyRef:
-                key: site-url
-                name: snippets-admin-v140-env
-          - name: SLACK_ENABLE
-            valueFrom:
-              secretKeyRef:
-                key: slack-enable
-                name: snippets-admin-v140-env
-          - name: SLACK_WEBHOOK
-            valueFrom:
-              secretKeyRef:
-                key: slack-webhook
-                name: snippets-admin-v140-env
-          - name: SNIPPET_BUNDLE_TIMEOUT
-            valueFrom:
-              secretKeyRef:
-                key: snippet-bundle-timeout
-                name: snippets-admin-v140-env
-          - name: STATSD_CLIENT
-            valueFrom:
-              secretKeyRef:
-                key: statsd-client
-                name: snippets-admin-v140-env
-          - name: STATSD_HOST
-            valueFrom:
-              secretKeyRef:
-                key: statsd-host
-                name: snippets-admin-v140-env
-          - name: WORKFLOW_RELEASE
-            valueFrom:
-              secretKeyRef:
-                key: workflow-release
-                name: snippets-admin-v140-env
-          - name: WORKFLOW_RELEASE_CREATED_AT
-            valueFrom:
-              secretKeyRef:
-                key: workflow-release-created-at
-                name: snippets-admin-v140-env
-          - name: WORKFLOW_RELEASE_SUMMARY
-            valueFrom:
-              secretKeyRef:
-                key: workflow-release-summary
-                name: snippets-admin-v140-env
-          - name: WSGI_KEEP_ALIVE
-            valueFrom:
-              secretKeyRef:
-                key: wsgi-keep-alive
-                name: snippets-admin-v140-env
-          - name: WSGI_NUM_WORKERS
-            valueFrom:
-              secretKeyRef:
-                key: wsgi-num-workers
-                name: snippets-admin-v140-env
-          image: 127.0.0.1:5555/snippets-admin:v140
-          imagePullPolicy: IfNotPresent
-          name: snippets-admin-web
-          readinessProbe:
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            tcpSocket:
-              port: 8000
-            timeoutSeconds: 5
-          resources:
-            limits:
-              cpu: "1"
-              memory: 600Mi
-            requests:
-              cpu: 250m
-              memory: 300Mi
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-kind: List
-metadata:
-  resourceVersion: ""
-  selfLink: ""
+        readinessProbe:
+          failureThreshold: 1
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 8000
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: 250m
+            memory: 300Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

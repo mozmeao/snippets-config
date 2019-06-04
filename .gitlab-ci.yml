@@ -12,7 +12,7 @@ deploy oregon-b dev:
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-dev
     # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -n snippets-dev deploy snippets-dev-web
+    - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml
 
 deploy oregon-b stage:
   variables:
@@ -27,7 +27,7 @@ deploy oregon-b stage:
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-stage
     # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-stage/deploy.yaml -w
+    - kubectl_1.11 rollout status -f oregon-b/snippets-stage/deploy.yaml
 
 deploy frankfurt prod:
   variables:
@@ -43,7 +43,7 @@ deploy frankfurt prod:
   script:
     - kubectl_1.11 apply -f frankfurt/snippets-prod
     # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f frankfurt/snippets-prod/deploy.yaml -w
+    - kubectl_1.11 rollout status -f frankfurt/snippets-prod/deploy.yaml
 
 deploy oregon-b prod:
   variables:
@@ -58,4 +58,4 @@ deploy oregon-b prod:
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-prod
     # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml -w
+    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml
