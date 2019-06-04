@@ -6,8 +6,10 @@ deploy frankfurt dev:
     - frankfurt
     - meao
   only:
-    - master
+    - dev
     - frankfurt
+    - frankfurt-dev
+    - master
   script:
     - kubectl_1.11 apply -f frankfurt/snippets-dev
     # --timeout requires kubectl 1.12+
@@ -20,8 +22,10 @@ deploy oregon-b dev:
     - aws
     - meao
   only:
+    - dev
     - master
     - oregon-b
+    - oregon-b-dev
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-dev
     # --timeout requires kubectl 1.12+
@@ -35,8 +39,8 @@ deploy frankfurt stage:
     - frankfurt
     - meao
   only:
-    - master
     - frankfurt
+    - frankfurt-stage
     - stage
   script:
     - kubectl_1.11 apply -f frankfurt/snippets-stage
@@ -50,8 +54,8 @@ deploy oregon-b stage:
     - aws
     - meao
   only:
-    - master
     - oregon-b
+    - oregon-b-stage
     - stage
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-stage
@@ -66,10 +70,9 @@ deploy frankfurt prod:
     - frankfurt
     - meao
   only:
-    - master
     - frankfurt
-    - prod
     - frankfurt-prod
+    - prod
   script:
     - kubectl_1.11 apply -f frankfurt/snippets-prod
     # --timeout requires kubectl 1.12+
@@ -82,10 +85,9 @@ deploy oregon-b prod:
     - aws
     - meao
   only:
-    - master
     - oregon-b
-    - prod
     - oregon-b-prod
+    - prod
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-prod
     # --timeout requires kubectl 1.12+
