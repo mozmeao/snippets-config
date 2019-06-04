@@ -249,7 +249,7 @@ items:
               secretKeyRef:
                 key: workflow-release-summary
                 name: snippets-dev-v157-env
-          image: mozorg/snippets:d8fd14c
+          image: mozorg/snippets:d038a6c
           imagePullPolicy: IfNotPresent
           name: snippets-dev-clock
           resources: {}
@@ -509,7 +509,7 @@ items:
               secretKeyRef:
                 key: workflow-release-summary
                 name: snippets-dev-v157-env
-          image: mozorg/snippets:d8fd14c
+          image: mozorg/snippets:d038a6c
           imagePullPolicy: IfNotPresent
           name: snippets-dev-web
           readinessProbe:
