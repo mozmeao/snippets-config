@@ -5,7 +5,7 @@ metadata:
   labels:
     app: snippets-dev
     type: test
-  name: snippets-dev-web
+  name: snippets-dev-test
   namespace: snippets-dev
 spec:
   progressDeadlineSeconds: 600
@@ -36,8 +36,8 @@ spec:
         - /bin/bash
         - -c
         env:
-      - name: ALLOWED_HOSTS
-        value: "*"
+        - name: ALLOWED_HOSTS
+          value: "*"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -95,14 +95,14 @@ spec:
           value: "True"
         - name: FILE_STORAGE
           value: snippets.base.storage.S3Storage
-      - name: K8S_NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
-      - name: K8S_POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
+        - name: K8S_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: METRICS_SAMPLE_RATE
           value: "1"
         - name: NEW_RELIC_APP_NAME
