@@ -247,7 +247,7 @@ spec:
             secretKeyRef:
               key: workflow-release-summary
               name: snippets-dev-v157-env
-        image: mozorg/snippets:d038a6c
+        image: mozorg/snippets:2188740
         imagePullPolicy: IfNotPresent
         name: snippets-dev-web
         readinessProbe:
