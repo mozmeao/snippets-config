@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-dev
-    type: test
-  name: snippets-dev-test
+    type: web
+  name: snippets-dev-web
   namespace: snippets-dev
 spec:
   progressDeadlineSeconds: 600
@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app: snippets-dev
-      type: test
+      type: web
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -25,7 +25,7 @@ spec:
       creationTimestamp: null
       labels:
         app: snippets-dev
-        type: test
+        type: web
       name: snippets-dev-web
       namespace: snippets-dev
     spec:
