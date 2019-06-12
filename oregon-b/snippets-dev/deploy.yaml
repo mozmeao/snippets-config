@@ -32,10 +32,10 @@ spec:
       containers:
       - args:
         - ./bin/run-prod.sh
-      - command:
+        command:
         - /bin/bash
         - -c
-      - env:
+        env:
         - name: ALLOWED_HOSTS
           value: "*"
         - name: AWS_ACCESS_KEY_ID
@@ -152,7 +152,10 @@ spec:
           value: datadog-statsd.datadog.svc.cluster.local
         - name: STATSD_PREFIX
           value: snippets-dev-oregon-b
+        # this value is what we had
         image: mozorg/snippets:8dfa411
+        # this value is from today's -o yaml export
+        image: 127.0.0.1:5555/snippets-dev:v171
         imagePullPolicy: IfNotPresent
         name: snippets-dev-web
         readinessProbe:
