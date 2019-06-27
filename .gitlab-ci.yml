@@ -21,6 +21,7 @@ deploy oregon-b stage:
     - aws
     - meao
   only:
+    - master
     - oregon-b
     - oregon-b-stage
     - stage
