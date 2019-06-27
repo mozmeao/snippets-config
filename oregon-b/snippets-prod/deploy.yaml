@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-prod
-    type: test
-  name: snippets-prod-web
+    type: web
+  name: snippets-prod
   namespace: snippets-prod
 spec:
   progressDeadlineSeconds: 600
@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app: snippets-prod
-      type: test
+      type: web
   strategy:
     rollingUpdate:
       maxSurge: 3
@@ -25,9 +25,8 @@ spec:
       creationTimestamp: null
       labels:
         app: snippets-prod
-        type: test
-        version: v121
-      name: snippets-prod-web
+        type: web
+      name: snippets-prod
       namespace: snippets-prod
     spec:
       containers:
@@ -38,238 +37,129 @@ spec:
         - -c
         env:
         - name: ADMIN_REDIRECT_URL
-          valueFrom:
-            secretKeyRef:
-              key: admin-redirect-url
-              name: snippets-prod-v121-env
+          value: https://snippets-admin.moz.works/admin/
         - name: ALLOWED_CIDR_NETS
           valueFrom:
             secretKeyRef:
               key: allowed-cidr-nets
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: ALLOWED_HOSTS
-          valueFrom:
-            secretKeyRef:
-              key: allowed-hosts
-              name: snippets-prod-v121-env
+          value: "*"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: AWS_S3_HOST
           valueFrom:
             secretKeyRef:
               key: aws-s3-host
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               key: aws-storage-bucket-name
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: BUNDLE_BROTLI_COMPRESS
-          valueFrom:
-            secretKeyRef:
-              key: bundle-brotli-compress
-              name: snippets-prod-v121-env
+          value: "True"
         - name: CACHALOT_TIMEOUT
-          valueFrom:
-            secretKeyRef:
-              key: cachalot-timeout
-              name: snippets-prod-v121-env
+          value: "300"
         - name: CACHE_URL
           valueFrom:
             secretKeyRef:
               key: cache-url
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: CDN_URL
-          valueFrom:
-            secretKeyRef:
-              key: cdn-url
-              name: snippets-prod-v121-env
+          value: https://snippets.cdn.mozilla.net
         - name: CSP_REPORT_ENABLE
-          valueFrom:
-            secretKeyRef:
-              key: csp-report-enable
-              name: snippets-prod-v121-env
+          value: "False"
         - name: CSP_REPORT_ONLY
-          valueFrom:
-            secretKeyRef:
-              key: csp-report-only
-              name: snippets-prod-v121-env
+          value: "True"
         - name: CSRF_USE_SESSIONS
-          valueFrom:
-            secretKeyRef:
-              key: csrf-use-sessions
-              name: snippets-prod-v121-env
+          value: "False"
         - name: CSV_EXPORT_ROOT
           valueFrom:
             secretKeyRef:
               key: csv-export-root
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: DEBUG
-          valueFrom:
-            secretKeyRef:
-              key: debug
-              name: snippets-prod-v121-env
-        - name: DEIS_APP
-          valueFrom:
-            secretKeyRef:
-              key: deis-app
-              name: snippets-prod-v121-env
-        - name: DEIS_DOMAIN
-          valueFrom:
-            secretKeyRef:
-              key: deis-domain
-              name: snippets-prod-v121-env
+          value: "False"
         - name: ENABLE_ADMIN
-          valueFrom:
-            secretKeyRef:
-              key: enable-admin
-              name: snippets-prod-v121-env
+          value: "False"
         - name: ENGAGE_ROBOTS
-          valueFrom:
-            secretKeyRef:
-              key: engage-robots
-              name: snippets-prod-v121-env
+          value: "True"
         - name: FILE_STORAGE
+          value: snippets.base.storage.S3Storage
+        - name: K8S_NAMESPACE
           valueFrom:
-            secretKeyRef:
-              key: file-storage
-              name: snippets-prod-v121-env
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: MEDIA_BUNDLES_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: media-bundles-root
-              name: snippets-prod-v121-env
+          value: us-west/bundles/
         - name: MEDIA_ICONS_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: media-icons-root
-              name: snippets-prod-v121-env
+          value: media/icons/
         - name: METRICS_SAMPLE_RATE
-          valueFrom:
-            secretKeyRef:
-              key: metrics-sample-rate
-              name: snippets-prod-v121-env
+          value: "0.001"
         - name: NEW_RELIC_APP_NAME
-          valueFrom:
-            secretKeyRef:
-              key: new-relic-app-name
-              name: snippets-prod-v121-env
+          value: snippets-prod-oregon-b
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               key: new-relic-license-key
-              name: snippets-prod-v121-env
-        - name: PORT
-          valueFrom:
-            secretKeyRef:
-              key: port
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: PROD_DETAILS_STORAGE
-          valueFrom:
-            secretKeyRef:
-              key: prod-details-storage
-              name: snippets-prod-v121-env
+          value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: SECURE_BROWSER_XSS_FILTER
-          valueFrom:
-            secretKeyRef:
-              key: secure-browser-xss-filter
-              name: snippets-prod-v121-env
+          value: "True"
         - name: SECURE_CONTENT_TYPE_NOSNIFF
-          valueFrom:
-            secretKeyRef:
-              key: secure-content-type-nosniff
-              name: snippets-prod-v121-env
+          value: "True"
         - name: SECURE_HSTS_SECONDS
-          valueFrom:
-            secretKeyRef:
-              key: secure-hsts-seconds
-              name: snippets-prod-v121-env
+          value: "31536000"
         - name: SECURE_SSL_REDIRECT
-          valueFrom:
-            secretKeyRef:
-              key: secure-ssl-redirect
-              name: snippets-prod-v121-env
+          value: "True"
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
               key: sentry-dsn
-              name: snippets-prod-v121-env
+              name: snippets-prod-secrets
         - name: SENTRY_ENVIRONMENT
-          valueFrom:
-            secretKeyRef:
-              key: sentry-environment
-              name: snippets-prod-v121-env
+          value: production
         - name: SITE_URL
-          valueFrom:
-            secretKeyRef:
-              key: site-url
-              name: snippets-prod-v121-env
+          value: https://snippets-prod.oregon-b.moz.works
         - name: SNIPPET_BUNDLE_TIMEOUT
-          valueFrom:
-            secretKeyRef:
-              key: snippet-bundle-timeout
-              name: snippets-prod-v121-env
+          value: "1800"
         - name: STATSD_CLIENT
-          valueFrom:
-            secretKeyRef:
-              key: statsd-client
-              name: snippets-prod-v121-env
+          value: django_statsd.clients.normal
         - name: STATSD_HOST
-          valueFrom:
-            secretKeyRef:
-              key: statsd-host
-              name: snippets-prod-v121-env
+          value: datadog-statsd.datadog.svc.cluster.local
         - name: STATSD_PREFIX
-          valueFrom:
-            secretKeyRef:
-              key: statsd-prefix
-              name: snippets-prod-v121-env
-        - name: WORKFLOW_RELEASE
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release
-              name: snippets-prod-v121-env
-        - name: WORKFLOW_RELEASE_CREATED_AT
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release-created-at
-              name: snippets-prod-v121-env
-        - name: WORKFLOW_RELEASE_SUMMARY
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release-summary
-              name: snippets-prod-v121-env
+          value: snippets-prod-us-west
         - name: WSGI_KEEP_ALIVE
-          valueFrom:
-            secretKeyRef:
-              key: wsgi-keep-alive
-              name: snippets-prod-v121-env
+          value: "90"
         - name: WSGI_NUM_WORKERS
-          valueFrom:
-            secretKeyRef:
-              key: wsgi-num-workers
-              name: snippets-prod-v121-env
-        image: 127.0.0.1:5555/snippets-prod:v121
+          value: "2"
+        image: mozorg/snippets:10a2bba
         imagePullPolicy: IfNotPresent
-        name: snippets-prod-web
+        name: snippets-prod
         readinessProbe:
           failureThreshold: 1
           initialDelaySeconds: 5
