@@ -64,6 +64,8 @@ spec:
             secretKeyRef:
               key: cache-url
               name: snippets-stage-secrets
+        - name: CLUSTER_NAME
+          value: "oregon-b"
         - name: CSP_REPORT_ENABLE
           value: "False"
         - name: CSP_REPORT_ONLY

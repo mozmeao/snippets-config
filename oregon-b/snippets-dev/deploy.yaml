@@ -67,6 +67,8 @@ spec:
             secretKeyRef:
               key: cache-url
               name: snippets-dev-secrets
+        - name: CLUSTER_NAME
+          value: "oregon-b"
         - name: CSP_REPORT_ONLY
           value: "True"
         - name: CSV_EXPORT_ROOT
