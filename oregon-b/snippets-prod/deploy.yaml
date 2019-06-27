@@ -76,6 +76,8 @@ spec:
               name: snippets-prod-secrets
         - name: CDN_URL
           value: https://snippets.cdn.mozilla.net
+        - name: CLUSTER_NAME
+          value: "oregon-b"
         - name: CSP_REPORT_ENABLE
           value: "False"
         - name: CSP_REPORT_ONLY

@@ -88,6 +88,8 @@ spec:
             secretKeyRef:
               key: cdn-url
               name: snippets-admin-v140-env
+        - name: CLUSTER_NAME
+          value: "oregon-b"
         - name: CSP_REPORT_ENABLE
           valueFrom:
             secretKeyRef:

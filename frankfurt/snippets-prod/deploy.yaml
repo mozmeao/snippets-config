@@ -89,6 +89,8 @@ items:
               secretKeyRef:
                 key: cdn-url
                 name: snippets-prod-v211-env
+          - name: CLUSTER_NAME
+            value: "frankfurt"
           - name: CSP_REPORT_ENABLE
             valueFrom:
               secretKeyRef:
