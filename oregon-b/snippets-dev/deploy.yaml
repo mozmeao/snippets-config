@@ -5,7 +5,7 @@ metadata:
   labels:
     app: snippets-dev
     type: web
-  name: snippets-dev-web
+  name: snippets-dev
   namespace: snippets-dev
 spec:
   progressDeadlineSeconds: 600
@@ -26,7 +26,7 @@ spec:
       labels:
         app: snippets-dev
         type: web
-      name: snippets-dev-web
+      name: snippets-dev
       namespace: snippets-dev
     spec:
       containers:
@@ -154,7 +154,7 @@ spec:
             value: snippets-dev-oregon-b
         image: mozorg/snippets:29e31b8
         imagePullPolicy: IfNotPresent
-        name: snippets-dev-web
+        name: snippets-dev
         readinessProbe:
           failureThreshold: 1
           initialDelaySeconds: 5
