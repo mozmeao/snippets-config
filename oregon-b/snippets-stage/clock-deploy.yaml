@@ -1,0 +1,201 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: snippets-stage
+    type: clock
+  name: snippets-stage-clock
+  namespace: snippets-stage
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: snippets-stage
+      type: clock
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: snippets-stage
+        type: clock
+      name: snippets-stage-clock
+      namespace: snippets-stage
+    spec:
+      containers:
+      - args:
+        - ./manage.py runscript cron
+        command:
+        - /bin/bash
+        - -c
+        env:
+        - name: ALLOWED_HOSTS
+          value: "*"
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: aws-access-key-id
+              name: snippets-stage-secrets
+        - name: AWS_S3_HOST
+          valueFrom:
+            secretKeyRef:
+              key: aws-s3-host
+              name: snippets-stage-secrets
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: aws-secret-access-key
+              name: snippets-stage-secrets
+        - name: AWS_STORAGE_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              key: aws-storage-bucket-name
+              name: snippets-stage-secrets
+        - name: BUNDLE_BROTLI_COMPRESS
+          value: "True"
+        - name: CACHALOT_ENABLED
+          value: "False"
+        - name: CACHE_URL
+          valueFrom:
+            secretKeyRef:
+              key: cache-url
+              name: snippets-stage-secrets
+        - name: CSP_REPORT_ENABLE
+          value: "False"
+        - name: CSP_REPORT_ONLY
+          value: "True"
+        - name: CSV_EXPORT_ROOT
+          valueFrom:
+            secretKeyRef:
+              key: csv-export-root
+              name: snippets-stage-secrets
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: database-url
+              name: snippets-stage-secrets
+        - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-disable-snippets
+              name: snippets-stage-secrets
+        - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-product-details
+              name: snippets-stage-secrets
+        - name: DEBUG
+          value: "False"
+        - name: ENABLE_ADMIN
+          value: "True"
+        - name: ENFORCE_HOST
+          value: "snippets.allizom.org"
+        - name: FILE_STORAGE
+          value: snippets.base.storage.S3Storage
+        - name: K8S_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MEDIA_ICONS_ROOT
+          value: "icons/"
+        - name: METRICS_SAMPLE_RATE
+          value: "1"
+        - name: NEW_RELIC_APP_NAME
+          value: snippets-stage-oregon-b
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: new-relic-license-key
+              name: snippets-stage-secrets
+        - name: OIDC_ENABLE
+          value: "True"
+        - name: OIDC_OP_AUTHORIZATION_ENDPOINT
+          value: https://auth.mozilla.auth0.com/authorize
+        - name: OIDC_OP_TOKEN_ENDPOINT
+          value: https://auth.mozilla.auth0.com/oauth/token
+        - name: OIDC_OP_USER_ENDPOINT
+          value: https://auth.mozilla.auth0.com/userinfo
+        - name: OIDC_RP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-id
+              name: snippets-stage-secrets
+        - name: OIDC_RP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-secret
+              name: snippets-stage-secrets
+        - name: PROD_DETAILS_STORAGE
+          value: product_details.storage.PDDatabaseStorage
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: secret-key
+              name: snippets-stage-secrets
+        - name: SECURE_BROWSER_XSS_FILTER
+          value: "True"
+        - name: SECURE_CONTENT_TYPE_NOSNIFF
+          value: "True"
+        - name: SECURE_HSTS_SECONDS
+          value: "31536000"
+        - name: SECURE_SSL_REDIRECT
+          value: "True"
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              key: sentry-dsn
+              name: snippets-stage-secrets
+        - name: SENTRY_ENVIRONMENT
+          value: stage
+        - name: SITE_HEADER
+          value: Snippets Administration Staging
+        - name: SITE_TITLE
+          value: Mozilla Snippets Staging Admin
+        - name: SITE_URL
+          value: https://snippets.allizom.org
+        - name: SLACK_ENABLE
+          value: "True"
+        - name: SLACK_WEBHOOK
+          valueFrom:
+            secretKeyRef:
+              key: slack-webhook
+              name: snippets-stage-secrets
+        - name: SNIPPET_BUNDLE_TIMEOUT
+          value: "1800"
+        - name: SNIPPET_HTTP_MAX_AGE
+          value: "600"
+        - name: STATSD_CLIENT
+          value: django_statsd.clients.normal
+        - name: STATSD_HOST
+          value: datadog-statsd.datadog.svc.cluster.local
+        - name: STATSD_PREFIX
+          value: snippets-stage-oregon-b
+        - name: WSGI_KEEP_ALIVE
+          value: "90"
+        - name: WSGI_NUM_WORKERS
+          value: "2"
+        image: mozorg/snippets:10a2bba
+        imagePullPolicy: IfNotPresent
+        name: snippets-stage-clock
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: 250m
+            memory: 300Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
