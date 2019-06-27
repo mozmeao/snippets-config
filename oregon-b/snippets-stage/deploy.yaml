@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-stage
-    type: test
-  name: snippets-stage-web
+    type: web
+  name: snippets-stage
   namespace: snippets-stage
 spec:
   progressDeadlineSeconds: 600
@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app: snippets-stage
-      type: test
+      type: web
   strategy:
     rollingUpdate:
       maxSurge: 3
@@ -25,9 +25,8 @@ spec:
       creationTimestamp: null
       labels:
         app: snippets-stage
-        type: test
-        version: v191
-      name: snippets-stage-web
+        type: web
+      name: snippets-stage
       namespace: snippets-stage
     spec:
       containers:
@@ -38,278 +37,157 @@ spec:
         - -c
         env:
         - name: ALLOWED_HOSTS
-          valueFrom:
-            secretKeyRef:
-              key: allowed-hosts
-              name: snippets-stage-v191-env
+          value: "*"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: AWS_S3_HOST
           valueFrom:
             secretKeyRef:
               key: aws-s3-host
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               key: aws-storage-bucket-name
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: BUNDLE_BROTLI_COMPRESS
-          valueFrom:
-            secretKeyRef:
-              key: bundle-brotli-compress
-              name: snippets-stage-v191-env
+          value: "True"
         - name: CACHALOT_ENABLED
-          valueFrom:
-            secretKeyRef:
-              key: cachalot-enabled
-              name: snippets-stage-v191-env
+          value: "False"
         - name: CACHE_URL
           valueFrom:
             secretKeyRef:
               key: cache-url
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: CSP_REPORT_ENABLE
-          valueFrom:
-            secretKeyRef:
-              key: csp-report-enable
-              name: snippets-stage-v191-env
+          value: "True"
         - name: CSP_REPORT_ONLY
-          valueFrom:
-            secretKeyRef:
-              key: csp-report-only
-              name: snippets-stage-v191-env
+          value: "True"
         - name: CSV_EXPORT_ROOT
           valueFrom:
             secretKeyRef:
               key: csv-export-root
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-disable-snippets
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-product-details
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: DEBUG
-          valueFrom:
-            secretKeyRef:
-              key: debug
-              name: snippets-stage-v191-env
-        - name: DEIS_APP
-          valueFrom:
-            secretKeyRef:
-              key: deis-app
-              name: snippets-stage-v191-env
-        - name: DEIS_DOMAIN
-          valueFrom:
-            secretKeyRef:
-              key: deis-domain
-              name: snippets-stage-v191-env
+          value: "False"
         - name: ENABLE_ADMIN
-          valueFrom:
-            secretKeyRef:
-              key: enable-admin
-              name: snippets-stage-v191-env
+          value: "True"
         - name: ENFORCE_HOST
-          valueFrom:
-            secretKeyRef:
-              key: enforce-host
-              name: snippets-stage-v191-env
+          value: "snippets.allizom.org"
         - name: FILE_STORAGE
+          value: snippets.base.storage.S3Storage
+        - name: K8S_NAMESPACE
           valueFrom:
-            secretKeyRef:
-              key: file-storage
-              name: snippets-stage-v191-env
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: MEDIA_ICONS_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: media-icons-root
-              name: snippets-stage-v191-env
+          value: "icons/"
         - name: METRICS_SAMPLE_RATE
-          valueFrom:
-            secretKeyRef:
-              key: metrics-sample-rate
-              name: snippets-stage-v191-env
+          value: "1"
         - name: NEW_RELIC_APP_NAME
-          valueFrom:
-            secretKeyRef:
-              key: new-relic-app-name
-              name: snippets-stage-v191-env
+          value: snippets-stage-oregon-b
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               key: new-relic-license-key
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: OIDC_ENABLE
-          valueFrom:
-            secretKeyRef:
-              key: oidc-enable
-              name: snippets-stage-v191-env
+          value: "True"
         - name: OIDC_OP_AUTHORIZATION_ENDPOINT
-          valueFrom:
-            secretKeyRef:
-              key: oidc-op-authorization-endpoint
-              name: snippets-stage-v191-env
+          value: https://auth.mozilla.auth0.com/authorize
         - name: OIDC_OP_TOKEN_ENDPOINT
-          valueFrom:
-            secretKeyRef:
-              key: oidc-op-token-endpoint
-              name: snippets-stage-v191-env
+          value: https://auth.mozilla.auth0.com/oauth/token
         - name: OIDC_OP_USER_ENDPOINT
-          valueFrom:
-            secretKeyRef:
-              key: oidc-op-user-endpoint
-              name: snippets-stage-v191-env
+          value: https://auth.mozilla.auth0.com/userinfo
         - name: OIDC_RP_CLIENT_ID
           valueFrom:
             secretKeyRef:
               key: oidc-rp-client-id
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: OIDC_RP_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               key: oidc-rp-client-secret
-              name: snippets-stage-v191-env
-        - name: PORT
-          valueFrom:
-            secretKeyRef:
-              key: port
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: PROD_DETAILS_STORAGE
-          valueFrom:
-            secretKeyRef:
-              key: prod-details-storage
-              name: snippets-stage-v191-env
+          value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: SECURE_BROWSER_XSS_FILTER
-          valueFrom:
-            secretKeyRef:
-              key: secure-browser-xss-filter
-              name: snippets-stage-v191-env
+          value: "True"
         - name: SECURE_CONTENT_TYPE_NOSNIFF
-          valueFrom:
-            secretKeyRef:
-              key: secure-content-type-nosniff
-              name: snippets-stage-v191-env
+          value: "True"
         - name: SECURE_HSTS_SECONDS
-          valueFrom:
-            secretKeyRef:
-              key: secure-hsts-seconds
-              name: snippets-stage-v191-env
+          value: "3600"
         - name: SECURE_SSL_REDIRECT
-          valueFrom:
-            secretKeyRef:
-              key: secure-ssl-redirect
-              name: snippets-stage-v191-env
+          value: "True"
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
               key: sentry-dsn
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: SENTRY_ENVIRONMENT
-          valueFrom:
-            secretKeyRef:
-              key: sentry-environment
-              name: snippets-stage-v191-env
+          value: stage
         - name: SITE_HEADER
-          valueFrom:
-            secretKeyRef:
-              key: site-header
-              name: snippets-stage-v191-env
+          value: Snippets Administration Staging
         - name: SITE_TITLE
-          valueFrom:
-            secretKeyRef:
-              key: site-title
-              name: snippets-stage-v191-env
+          value: Mozilla Snippets Staging Admin
         - name: SITE_URL
-          valueFrom:
-            secretKeyRef:
-              key: site-url
-              name: snippets-stage-v191-env
+          value: https://snippets.allizom.org
         - name: SLACK_ENABLE
-          valueFrom:
-            secretKeyRef:
-              key: slack-enable
-              name: snippets-stage-v191-env
+          value: "True"
         - name: SLACK_WEBHOOK
           valueFrom:
             secretKeyRef:
               key: slack-webhook
-              name: snippets-stage-v191-env
+              name: snippets-stage-secrets
         - name: SNIPPET_BUNDLE_TIMEOUT
-          valueFrom:
-            secretKeyRef:
-              key: snippet-bundle-timeout
-              name: snippets-stage-v191-env
+          value: "1800"
         - name: SNIPPET_HTTP_MAX_AGE
-          valueFrom:
-            secretKeyRef:
-              key: snippet-http-max-age
-              name: snippets-stage-v191-env
+          value: "600"
         - name: STATSD_CLIENT
-          valueFrom:
-            secretKeyRef:
-              key: statsd-client
-              name: snippets-stage-v191-env
+          value: django_statsd.clients.normal
         - name: STATSD_HOST
-          valueFrom:
-            secretKeyRef:
-              key: statsd-host
-              name: snippets-stage-v191-env
+          value: datadog-statsd.datadog.svc.cluster.local
         - name: STATSD_PREFIX
-          valueFrom:
-            secretKeyRef:
-              key: statsd-prefix
-              name: snippets-stage-v191-env
-        - name: WORKFLOW_RELEASE
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release
-              name: snippets-stage-v191-env
-        - name: WORKFLOW_RELEASE_CREATED_AT
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release-created-at
-              name: snippets-stage-v191-env
-        - name: WORKFLOW_RELEASE_SUMMARY
-          valueFrom:
-            secretKeyRef:
-              key: workflow-release-summary
-              name: snippets-stage-v191-env
+          value: snippets-stage-oregon-b
         - name: WSGI_KEEP_ALIVE
-          valueFrom:
-            secretKeyRef:
-              key: wsgi-keep-alive
-              name: snippets-stage-v191-env
+          value: "90"
         - name: WSGI_NUM_WORKERS
-          valueFrom:
-            secretKeyRef:
-              key: wsgi-num-workers
-              name: snippets-stage-v191-env
-        image: 127.0.0.1:5555/snippets-stage:v191
+          value: "2"
+        image: mozorg/snippets:10a2bba
         imagePullPolicy: IfNotPresent
-        name: snippets-stage-web
+        name: snippets-stage
         readinessProbe:
           failureThreshold: 1
           initialDelaySeconds: 5
