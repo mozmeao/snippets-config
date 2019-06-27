@@ -68,7 +68,7 @@ spec:
               key: cache-url
               name: snippets-stage-secrets
         - name: CSP_REPORT_ENABLE
-          value: "True"
+          value: "False"
         - name: CSP_REPORT_ONLY
           value: "True"
         - name: CSV_EXPORT_ROOT
@@ -148,7 +148,7 @@ spec:
         - name: SECURE_CONTENT_TYPE_NOSNIFF
           value: "True"
         - name: SECURE_HSTS_SECONDS
-          value: "3600"
+          value: "31536000"
         - name: SECURE_SSL_REDIRECT
           value: "True"
         - name: SENTRY_DSN
