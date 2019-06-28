@@ -40,6 +40,7 @@ deploy frankfurt prod:
   only:
     - frankfurt
     - frankfurt-prod
+    - master
     - prod
   script:
     - kubectl_1.11 apply -f frankfurt/snippets-prod
@@ -53,6 +54,7 @@ deploy oregon-b prod:
     - aws
     - meao
   only:
+    - master
     - oregon-b
     - oregon-b-prod
     - prod
