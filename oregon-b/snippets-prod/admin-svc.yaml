@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-admin
-  name: snippets-nodeport
-  namespace: snippets-admin
+  name: snippets-admin-nodeport
+  namespace: snippets-prod
 spec:
   externalTrafficPolicy: Cluster
   ports:
