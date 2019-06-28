@@ -38,11 +38,6 @@ spec:
         env:
         - name: ADMIN_REDIRECT_URL
           value: https://snippets-admin.moz.works/admin/
-        - name: ALLOWED_CIDR_NETS
-          valueFrom:
-            secretKeyRef:
-              key: allowed-cidr-nets
-              name: snippets-prod-secrets
         - name: ALLOWED_HOSTS
           value: "*"
         - name: AWS_ACCESS_KEY_ID
