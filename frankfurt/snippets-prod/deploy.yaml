@@ -132,7 +132,8 @@ spec:
         - name: SECURE_HSTS_SECONDS
           value: "31536000"
         - name: SECURE_SSL_REDIRECT
-          value: "True"
+          # when this is set to True like in oregon-b it results in a redirect loop
+          value: "False"
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
