@@ -13,6 +13,7 @@ deploy oregon-b dev:
     - kubectl_1.11 apply -f oregon-b/snippets-dev
     # --timeout requires kubectl 1.12+
     - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml
+    - bin/acceptance-tests.sh https://snippets-dev.oregon-b.moz.works
 
 deploy oregon-b stage:
   variables:
@@ -29,6 +30,7 @@ deploy oregon-b stage:
     - kubectl_1.11 apply -f oregon-b/snippets-stage
     # --timeout requires kubectl 1.12+
     - kubectl_1.11 rollout status -f oregon-b/snippets-stage/deploy.yaml
+    - bin/acceptance-tests.sh https://snippets.allizom.org
 
 deploy frankfurt prod:
   variables:
@@ -46,6 +48,7 @@ deploy frankfurt prod:
     - kubectl_1.11 apply -f frankfurt/snippets-prod
     # --timeout requires kubectl 1.12+
     - kubectl_1.11 rollout status -f frankfurt/snippets-prod/deploy.yaml
+    - bin/acceptance-tests.sh https://snippets-prod.frankfurt.moz.works
 
 deploy oregon-b prod:
   variables:
@@ -62,3 +65,4 @@ deploy oregon-b prod:
     - kubectl_1.11 apply -f oregon-b/snippets-prod
     # --timeout requires kubectl 1.12+
     - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml
+    - bin/acceptance-tests.sh https://snippets-prod.oregon-b.moz.works
