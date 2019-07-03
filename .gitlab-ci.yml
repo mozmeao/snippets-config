@@ -64,5 +64,7 @@ deploy oregon-b prod:
   script:
     - kubectl_1.11 apply -f oregon-b/snippets-prod
     # --timeout requires kubectl 1.12+
+    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/admin-deploy.yaml
     - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml
+    - ./acceptance-tests.sh https://snippets-admin.mozilla.org
     - ./acceptance-tests.sh https://snippets-prod.oregon-b.moz.works
