@@ -5,21 +5,10 @@ set -ex pipefail
 NEWRELIC_USER=gitlab
 # TODO: where/how to get newrelic api key?
 # retrieve from somewhere on disk or a service?
-API_KEY=idunno
-
-if [[ $NEWRELIC_APP = snippets-dev-oregon-b ]]; then
-    K8S_NAMESPACE=snippets-dev
-elif [[ $NEWRELIC_APP = snippets-stage-oregon-b ]]; then
-    K8S_NAMESPACE=snippets-stage
-elif [[ $NEWRELIC_APP = snippets-prod-frankfurt ]]; then
-    K8S_NAMESPACE=snippets-prod
-fi
-
-# set the namespace before getting the deployment
-kubectl config set-context $(kubectl config current-context) --namespace=$K8S_NAMESPACE
+API_KEY=$(< ~/.newrelic-api-key)
 
 # get the image value from the base deployment matching the K8S_NAMESPACE
-FULL_IMAGE="kubectl get deploy ${K8S_NAMESPACE} -o jsonpath=\"{...image}\""
+FULL_IMAGE="kubectl get deploy ${K8S_NAMESPACE} -n ${K8S_NAMESPACE} -o jsonpath=\"{$.spec.template.spec.containers[0].image}\""
 
 # last 7 characters of the image value will be the hash
 GIT_COMMIT_SHORT="${FULL_IMAGE: -7}"
