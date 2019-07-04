@@ -4,6 +4,9 @@ stages:
 .deploy:
   stage: deploy
   retry: 2  # Add two retries, especially for acceptance-tests
+  tags:
+    - aws
+    - meao
   script:
     - kubectl_1.11 apply -f ${DEPLOYMENT}
     - kubectl_1.11 rollout status -f ${DEPLOYMENT}/web-deploy.yaml
