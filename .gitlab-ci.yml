@@ -3,7 +3,9 @@ stages:
 
 .deploy:
   stage: deploy
-  retry: 2  # Add two retries, especially for acceptance-tests
+  retry:
+    max: 1  # Add one retry, especially for acceptance-tests
+    when: always
   tags:
     - aws
     - meao
