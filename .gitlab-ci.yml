@@ -12,6 +12,9 @@ stages:
   script:
     - kubectl_1.11 apply -f ${DEPLOYMENT}
     - kubectl_1.11 rollout status -f ${DEPLOYMENT}/web-deploy.yaml
+    # Retry doesn't seem to work for now. Sleep a few seconds before running the
+    # tests.
+    - sleep 5s
     - ./acceptance-tests.sh ${URL}
 
 
