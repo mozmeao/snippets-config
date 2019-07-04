@@ -4,31 +4,34 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-admin
-    type: clock
-  name: snippets-admin-clock
-  namespace: snippets-prod
+    type: web
+  name: snippets-admin-web
+  namespace: snippets-admin
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: snippets-admin
-      type: clock
+      type: web
   strategy:
-    type: Recreate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
         app: snippets-admin
-        type: clock
-      name: snippets-admin-clock
-      namespace: snippets-prod
+        type: web
+      name: snippets-admin-web
+      namespace: snippets-admin
     spec:
       containers:
       - args:
-        - ./manage.py runscript cron
+        - ./bin/run-prod.sh
         command:
         - /bin/bash
         - -c
@@ -37,29 +40,29 @@ spec:
           valueFrom:
             secretKeyRef:
               key: allowed-cidr-nets
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: ALLOWED_HOSTS
           value: "*"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: AWS_S3_HOST
           valueFrom:
             secretKeyRef:
               key: aws-s3-host
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               key: aws-storage-bucket-name
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: BUNDLE_BROTLI_COMPRESS
           value: "True"
         - name: CACHALOT_ENABLED
@@ -68,7 +71,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: cache-url
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: CDN_URL
           value: https://snippets.cdn.mozilla.net
         - name: CLUSTER_NAME
@@ -81,31 +84,33 @@ spec:
           valueFrom:
             secretKeyRef:
               key: csv-export-root
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: DEAD_MANS_SNITCH_CSV_EXPORT
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-csv-export
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-disable-snippets
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-product-details
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: DEBUG
           value: "False"
         - name: ENABLE_ADMIN
           value: "True"
+        - name: ENFORCE_HOST
+          value: "snippets-admin.mozilla.org"
         - name: FILE_STORAGE
           value: snippets.base.storage.S3Storage
         - name: MEDIA_BUNDLES_ROOT
@@ -120,7 +125,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: new-relic-license-key
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: OIDC_ENABLE
           value: "True"
         - name: OIDC_OP_AUTHORIZATION_ENDPOINT
@@ -133,19 +138,19 @@ spec:
           valueFrom:
             secretKeyRef:
               key: oidc-rp-client-id
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: OIDC_RP_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               key: oidc-rp-client-secret
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: PROD_DETAILS_STORAGE
           value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: SECURE_BROWSER_XSS_FILTER
           value: "True"
         - name: SECURE_CONTENT_TYPE_NOSNIFF
@@ -158,7 +163,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: sentry-dsn
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: SENTRY_ENVIRONMENT
           value: prod-admin
         - name: SITE_HEADER
@@ -173,7 +178,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: slack-webhook
-              name: snippets-prod-secrets
+              name: snippets-admin-secrets
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
         - name: STATSD_CLIENT
@@ -187,6 +192,14 @@ spec:
         image: mozorg/snippets:10a2bba
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
+        readinessProbe:
+          failureThreshold: 1
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 8000
+          timeoutSeconds: 5
         resources:
           limits:
             cpu: "1"

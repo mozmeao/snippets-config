@@ -5,7 +5,7 @@ metadata:
   labels:
     app: snippets-admin
   name: snippets-admin-nodeport
-  namespace: snippets-prod
+  namespace: snippets-admin
 spec:
   externalTrafficPolicy: Cluster
   ports:

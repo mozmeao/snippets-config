@@ -1,70 +1,61 @@
+stages:
+  - deploy
+
+.deploy:
+  stage: deploy
+  retry: 2  # Add two retries, especially for acceptance-tests
+  script:
+    - kubectl_1.11 apply -f ${DEPLOYMENT}
+    - kubectl_1.11 rollout status -f ${DEPLOYMENT}/web-deploy.yaml
+    - ./acceptance-tests.sh ${URL}
+
+
 deploy oregon-b dev:
+  extends: .deploy
   variables:
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-  tags:
-    - aws
-    - meao
+    DEPLOYMENT: oregon-b/snippets-dev
+    URL: https://snippets-dev.oregon-b.moz.works
   only:
-    - dev
-    - master
-    - oregon-b
-    - oregon-b-dev
-  script:
-    - kubectl_1.11 apply -f oregon-b/snippets-dev
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-dev/deploy.yaml
-    - ./acceptance-tests.sh https://snippets-dev.oregon-b.moz.works
+    changes:
+      - "oregon-b/snippets-dev/*"
 
 deploy oregon-b stage:
+  extends: .deploy
   variables:
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-  tags:
-    - aws
-    - meao
+    DEPLOYMENT: oregon-b/snippets-stage
+    URL: https://snippets.allizom.org
   only:
-    - master
-    - oregon-b
-    - oregon-b-stage
-    - stage
-  script:
-    - kubectl_1.11 apply -f oregon-b/snippets-stage
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-stage/deploy.yaml
-    - ./acceptance-tests.sh https://snippets.allizom.org
-
-deploy frankfurt prod:
-  variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
-  tags:
-    - aws
-    - frankfurt
-    - meao
-  only:
-    - frankfurt
-    - frankfurt-prod
-    - master
-    - prod
-  script:
-    - kubectl_1.11 apply -f frankfurt/snippets-prod
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f frankfurt/snippets-prod/deploy.yaml
-    - ./acceptance-tests.sh https://snippets-prod.frankfurt.moz.works
+    changes:
+      - "oregon-b/snippets-stage/*"
 
 deploy oregon-b prod:
+  extends: .deploy
   variables:
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-  tags:
-    - aws
-    - meao
+    DEPLOYMENT: oregon-b/snippets-prod
+    URL: https://snippets-prod.oregon-b.moz.works
   only:
-    - master
-    - oregon-b
-    - oregon-b-prod
-    - prod
-  script:
-    - kubectl_1.11 apply -f oregon-b/snippets-prod
-    # --timeout requires kubectl 1.12+
-    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/admin-deploy.yaml
-    - kubectl_1.11 rollout status -f oregon-b/snippets-prod/deploy.yaml
-    - ./acceptance-tests.sh https://snippets-admin.mozilla.org
-    - ./acceptance-tests.sh https://snippets-prod.oregon-b.moz.works
+    changes:
+      - "oregon-b/snippets-prod/*"
+
+deploy frankfurt prod:
+  extends: .deploy
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
+    DEPLOYMENT: frankfurt/snippets-prod
+    URL: https://snippets-prod.frankfurt.moz.works
+  only:
+    changes:
+      - "frankfurt/snippets-prod/*"
+
+deploy oregon-b admin:
+  extends: .deploy
+  variables:
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+    DEPLOYMENT: oregon-b/snippets-admin
+    URL: https://snippets-admin.mozilla.org
+  only:
+    changes:
+      - "oregon-b/snippets-admin/*"
