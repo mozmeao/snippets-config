@@ -16,13 +16,15 @@ stages:
     # tests.
     - sleep 5s
     - ./acceptance-tests.sh ${URL}
+    - ./newrelic-notify.sh
 
 
 deploy oregon-b dev:
   extends: .deploy
   variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
     DEPLOYMENT: oregon-b/snippets-dev
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+    NEWRELIC_APP: snippets-dev-oregon-b
     URL: https://snippets-dev.oregon-b.moz.works
   only:
     changes:
@@ -31,8 +33,9 @@ deploy oregon-b dev:
 deploy oregon-b stage:
   extends: .deploy
   variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
     DEPLOYMENT: oregon-b/snippets-stage
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+    NEWRELIC_APP: snippets-stage-oregon-b
     URL: https://snippets.allizom.org
   only:
     changes:
@@ -41,8 +44,9 @@ deploy oregon-b stage:
 deploy oregon-b prod:
   extends: .deploy
   variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
     DEPLOYMENT: oregon-b/snippets-prod
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+    NEWRELIC_APP: snippets-prod-oregon-b
     URL: https://snippets-prod.oregon-b.moz.works
   only:
     changes:
@@ -51,8 +55,9 @@ deploy oregon-b prod:
 deploy frankfurt prod:
   extends: .deploy
   variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
     DEPLOYMENT: frankfurt/snippets-prod
+    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
+    NEWRELIC_APP: snippets-prod-frankfurt
     URL: https://snippets-prod.frankfurt.moz.works
   only:
     changes:
@@ -61,8 +66,9 @@ deploy frankfurt prod:
 deploy oregon-b admin:
   extends: .deploy
   variables:
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
     DEPLOYMENT: oregon-b/snippets-admin
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
+    NEWRELIC_APP: snippets-admin-oregon-b
     URL: https://snippets-admin.mozilla.org
   only:
     changes:
