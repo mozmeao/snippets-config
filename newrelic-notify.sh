@@ -6,8 +6,10 @@ NEWRELIC_USER=gitlab
 
 API_KEY=$(< ~/.newrelic-api-key)
 
-# last 7 characters of the image value will be the hash
-GIT_COMMIT_SHORT="grep -oP '(image: .+?:)\K.*' ${DEPLOYMENT}/web-deploy.yaml"
+# the image value in the yaml contains the first 7 digits of the git commit hash
+# yaml line format is as follows:
+# image: mozorg/snippets:283065b
+GIT_COMMIT_SHORT="$(grep -oP '(image: .+?:)\K.*' ${DEPLOYMENT}/web-deploy.yaml)"
 
 # go tell new relic
 curl -s -H "x-api-key:${API_KEY}" \
