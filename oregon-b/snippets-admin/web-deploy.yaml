@@ -189,7 +189,7 @@ spec:
           value: "90"
         - name: WSGI_NUM_WORKERS
           value: "2"
-        image: mozorg/snippets:d447a6a7
+        image: mozorg/snippets:e3badc3e
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
         readinessProbe:
