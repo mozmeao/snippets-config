@@ -93,11 +93,6 @@ spec:
             secretKeyRef:
               key: dead-mans-snitch-product-details
               name: snippets-stage-secrets
-        - name: DEAD_MANS_SNITCH_UPDATE_JOBS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-update-jobs
-              name: snippets-stage-secrets
         - name: DEBUG
           value: "False"
         - name: ENABLE_ADMIN
