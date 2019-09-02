@@ -115,6 +115,8 @@ spec:
           value: snippets.base.storage.S3Storage
         - name: MEDIA_BUNDLES_ROOT
           value: us-west/bundles/
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/
         - name: MEDIA_ICONS_ROOT
           value: media/icons/
         - name: METRICS_SAMPLE_RATE
