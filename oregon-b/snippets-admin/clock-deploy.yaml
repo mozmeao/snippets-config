@@ -196,7 +196,7 @@ spec:
             secretKeyRef:
               key: redash-api-key
               name: snippets-admin-secrets
-        image: mozorg/snippets:2a13a96e
+        image: mozorg/snippets:3d1ad312
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
         resources:
