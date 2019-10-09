@@ -107,6 +107,11 @@ spec:
             secretKeyRef:
               key: dead-mans-snitch-update-jobs
               name: snippets-admin-secrets
+        - name: DEAD_MANS_SNITCH_FETCH_METRICS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-fetch-metrics
+              name: snippets-admin-secrets
         - name: DEBUG
           value: "False"
         - name: ENABLE_ADMIN
