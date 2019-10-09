@@ -191,6 +191,11 @@ spec:
           value: "90"
         - name: WSGI_NUM_WORKERS
           value: "2"
+        - name: REDASH_API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: redash-api-key
+              name: snippets-admin-secrets
         image: mozorg/snippets:2a13a96e
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
