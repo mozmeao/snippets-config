@@ -18,7 +18,6 @@ stages:
     - sleep 5s
     - ./acceptance-tests.sh ${URL}
 
-
 deploy oregon-b dev:
   extends: .deploy
   variables:
@@ -29,6 +28,8 @@ deploy oregon-b dev:
   only:
     changes:
       - "oregon-b/snippets-dev/*"
+    refs:
+      - master
 
 deploy oregon-b stage:
   extends: .deploy
@@ -40,6 +41,8 @@ deploy oregon-b stage:
   only:
     changes:
       - "oregon-b/snippets-stage/*"
+    refs:
+      - master
 
 deploy oregon-b prod:
   extends: .deploy
@@ -51,6 +54,8 @@ deploy oregon-b prod:
   only:
     changes:
       - "oregon-b/snippets-prod/*"
+    refs:
+      - master
 
 deploy frankfurt prod:
   extends: .deploy
@@ -62,6 +67,8 @@ deploy frankfurt prod:
   only:
     changes:
       - "frankfurt/snippets-prod/*"
+    refs:
+      - master
 
 deploy oregon-b admin:
   extends: .deploy
@@ -73,3 +80,5 @@ deploy oregon-b admin:
   only:
     changes:
       - "oregon-b/snippets-admin/*"
+    refs:
+      - master
