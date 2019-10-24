@@ -189,7 +189,7 @@ spec:
           value: "90"
         - name: WSGI_NUM_WORKERS
           value: "2"
-        image: mozorg/snippets:3e7ddbbd
+        image: mozorg/snippets:2c7601d6
         imagePullPolicy: IfNotPresent
         name: snippets-stage-clock
         resources:
