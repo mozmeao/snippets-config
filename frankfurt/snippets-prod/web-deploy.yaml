@@ -159,7 +159,7 @@ spec:
           value: "False"
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
-        image: mozorg/snippets:daf0aeaa
+        image: mozorg/snippets:30bc19ee
         imagePullPolicy: IfNotPresent
         name: snippets-prod
         readinessProbe:
