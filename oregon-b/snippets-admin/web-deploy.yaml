@@ -191,6 +191,8 @@ spec:
           value: "2"
         - name: USE_PREGEN_BUNDLES
           value: "True"
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/
         image: mozorg/snippets:daf0aeaa
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
