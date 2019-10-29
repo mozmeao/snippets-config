@@ -189,7 +189,7 @@ spec:
           value: "2"
         - name: USE_PREGEN_BUNDLES
           value: "True"
-        image: mozorg/snippets:30bc19ee
+        image: mozorg/snippets:bfb350f6
         imagePullPolicy: IfNotPresent
         name: snippets-stage
         readinessProbe:
