@@ -111,8 +111,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: MEDIA_ICONS_ROOT
-          value: "icons/"
         - name: METRICS_SAMPLE_RATE
           value: "1"
         - name: NEW_RELIC_APP_NAME
@@ -188,7 +186,13 @@ spec:
         - name: WSGI_KEEP_ALIVE
           value: "90"
         - name: WSGI_NUM_WORKERS
-          value: "2"
+          value: "2"   
+        - name: MEDIA_BUNDLES_ROOT
+          value: us-west/bundles/
+        - name: MEDIA_ICONS_ROOT
+          value: media/icons/          
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/         
         image: mozorg/snippets:c209614f
         imagePullPolicy: IfNotPresent
         name: snippets-stage-clock
