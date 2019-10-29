@@ -191,6 +191,12 @@ spec:
           value: "True"
         - name: CDN_URL
           value: https://d177vs5g6znz6f.cloudfront.net
+        - name: MEDIA_BUNDLES_ROOT
+          value: us-west/bundles/
+        - name: MEDIA_ICONS_ROOT
+          value: media/icons/          
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/
         image: mozorg/snippets:c209614f
         imagePullPolicy: IfNotPresent
         name: snippets-stage
