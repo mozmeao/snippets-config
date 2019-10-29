@@ -188,10 +188,10 @@ spec:
         - name: WSGI_NUM_WORKERS
           value: "2"
         - name: USE_PREGEN_BUNDLES
-          value: "False"
+          value: "True"
         - name: CDN_URL
           value: https://d177vs5g6znz6f.cloudfront.net
-        image: mozorg/snippets:30bc19ee
+        image: mozorg/snippets:c209614f
         imagePullPolicy: IfNotPresent
         name: snippets-stage
         readinessProbe:
