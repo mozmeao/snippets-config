@@ -188,8 +188,8 @@ spec:
         - name: WSGI_NUM_WORKERS
           value: "2"
         - name: USE_PREGEN_BUNDLES
-          value: "True"
-        image: mozorg/snippets:bfb350f6
+          value: "False"
+        image: mozorg/snippets:30bc19ee
         imagePullPolicy: IfNotPresent
         name: snippets-stage
         readinessProbe:
