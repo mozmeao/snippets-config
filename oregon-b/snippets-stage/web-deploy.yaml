@@ -189,6 +189,8 @@ spec:
           value: "2"
         - name: USE_PREGEN_BUNDLES
           value: "False"
+        - name: CDN_URL
+          value: https://d177vs5g6znz6f.cloudfront.net
         image: mozorg/snippets:30bc19ee
         imagePullPolicy: IfNotPresent
         name: snippets-stage
