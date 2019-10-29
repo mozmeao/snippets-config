@@ -156,10 +156,10 @@ spec:
         - name: WSGI_NUM_WORKERS
           value: "2"
         - name: USE_PREGEN_BUNDLES
-          value: "True"
+          value: "False"
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
-        image: mozorg/snippets:c209614f
+        image: mozorg/snippets:30bc19ee
         imagePullPolicy: IfNotPresent
         name: snippets-prod
         readinessProbe:
