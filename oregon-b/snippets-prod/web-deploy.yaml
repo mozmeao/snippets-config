@@ -160,7 +160,7 @@ spec:
         - name: WSGI_NUM_WORKERS
           value: "2"
         - name: USE_PREGEN_BUNDLES
-          value: "False"
+          value: "True"
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
         image: mozorg/snippets:08900655
