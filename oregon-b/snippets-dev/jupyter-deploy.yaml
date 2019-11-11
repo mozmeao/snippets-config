@@ -106,24 +106,6 @@ spec:
             secretKeyRef:
               key: new-relic-license-key
               name: snippets-dev-secrets
-        - name: OIDC_ENABLE
-          value: "True"
-        - name: OIDC_OP_AUTHORIZATION_ENDPOINT
-          value: https://auth.mozilla.auth0.com/authorize
-        - name: OIDC_OP_TOKEN_ENDPOINT
-          value: https://auth.mozilla.auth0.com/oauth/token
-        - name: OIDC_OP_USER_ENDPOINT
-          value: https://auth.mozilla.auth0.com/userinfo
-        - name: OIDC_RP_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              key: oidc-rp-client-id
-              name: snippets-dev-secrets
-        - name: OIDC_RP_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              key: oidc-rp-client-secret
-              name: snippets-dev-secrets
         - name: PROD_DETAILS_STORAGE
           value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
