@@ -132,13 +132,6 @@ spec:
           value: Jupyter Development
         - name: SITE_URL
           value: https://jupyter.moz.works
-        - name: SLACK_ENABLE
-          value: "True"
-        - name: SLACK_WEBHOOK
-          valueFrom:
-            secretKeyRef:
-              key: slack-webhook
-              name: snippets-dev-secrets
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
         - name: STATSD_CLIENT
