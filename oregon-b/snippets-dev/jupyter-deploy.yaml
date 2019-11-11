@@ -83,26 +83,6 @@ spec:
             secretKeyRef:
               key: database-url
               name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_CSV_EXPORT
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-csv-export
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-disable-snippets
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-product-details
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_UPDATE_JOBS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-update-jobs
-              name: snippets-dev-secrets
         - name: DEBUG
           value: "False"
         - name: DJANGO_SETTINGS_MODULE
