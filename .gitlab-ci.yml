@@ -10,14 +10,13 @@ stages:
     - aws
     - meao
   script:
-    - kubectl_1.11 apply -f ${DEPLOYMENT}
-    - kubectl_1.11 rollout status -f ${DEPLOYMENT}/web-deploy.yaml
+    - kubectl apply -f ${DEPLOYMENT}
+    - kubectl rollout status -f ${DEPLOYMENT}/web-deploy.yaml
     - ./newrelic-notify.sh
     # Retry doesn't seem to work for now. Sleep a few seconds before running the
     # tests.
     - sleep 5s
     - ./acceptance-tests.sh ${URL}
-
 
 deploy oregon-b dev:
   extends: .deploy
@@ -29,6 +28,8 @@ deploy oregon-b dev:
   only:
     changes:
       - "oregon-b/snippets-dev/*"
+    refs:
+      - master
 
 deploy oregon-b stage:
   extends: .deploy
@@ -40,6 +41,8 @@ deploy oregon-b stage:
   only:
     changes:
       - "oregon-b/snippets-stage/*"
+    refs:
+      - master
 
 deploy oregon-b prod:
   extends: .deploy
@@ -51,6 +54,8 @@ deploy oregon-b prod:
   only:
     changes:
       - "oregon-b/snippets-prod/*"
+    refs:
+      - master
 
 deploy frankfurt prod:
   extends: .deploy
@@ -62,6 +67,8 @@ deploy frankfurt prod:
   only:
     changes:
       - "frankfurt/snippets-prod/*"
+    refs:
+      - master
 
 deploy oregon-b admin:
   extends: .deploy
@@ -73,3 +80,5 @@ deploy oregon-b admin:
   only:
     changes:
       - "oregon-b/snippets-admin/*"
+    refs:
+      - master
