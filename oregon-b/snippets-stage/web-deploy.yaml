@@ -197,7 +197,7 @@ spec:
           value: media/icons/          
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
-        image: mozorg/snippets:52a099d0
+        image: mozorg/snippets:562dbc49
         imagePullPolicy: IfNotPresent
         name: snippets-stage
         livenessProbe:
