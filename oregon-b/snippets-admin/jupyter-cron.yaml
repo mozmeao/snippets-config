@@ -1,0 +1,57 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: snippets-jupyter-cron
+  namespace: snippets-admin
+spec:
+  schedule: "@daily"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - args:
+            - nbconvert
+            - --to
+            - notebook
+            - --execute
+            - Category Performance.ipynb
+            command:
+            - jupyter
+            env:
+            - name: ALLOWED_HOSTS
+              value: "*"
+            - name: CDN_URL
+              value: https://snippets.cdn.mozilla.net
+            - name: CLUSTER_NAME
+              value: "oregon-b"
+            - name: CSV_EXPORT_ROOT
+              valueFrom:
+                secretKeyRef:
+                  key: csv-export-root
+                  name: snippets-admin-secrets
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: database-url
+                  name: snippets-admin-secrets
+            - name: DEAD_MANS_SNITCH_CSV_EXPORT
+              valueFrom:
+                secretKeyRef:
+                  key: dead-mans-snitch-csv-export
+                  name: snippets-admin-secrets
+            - name: DEBUG
+              value: "False"
+            - name: DJANGO_SETTINGS_MODULE
+              value: snippets.settings
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secret-key
+                  name: snippets-admin-secrets
+            image: mozorg/snippets:jupyter-notebooks-421b185
+            name: snippets-jupyter
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          restartPolicy: OnFailure
