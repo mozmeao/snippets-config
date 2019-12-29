@@ -25,13 +25,11 @@ spec:
     spec:
       containers:
       - args:
-        - jupyter notebook --ip=0.0.0.0
-        # without the --ip=0.0.0.0 we get OSError: [Errno 99] Cannot assign requested address
-        # ./manage.py shell_plus --notebook # OSError: [Errno 99] Cannot assign requested address
-        # need to find equivalent of --ip=0.0.0.0
+        - manage.py
+        - shell_plus
+        - --notebook
         command:
-        - /bin/bash
-        - -c 
+        - python
         env:
         - name: ALLOWED_HOSTS
           value: "*"
@@ -39,20 +37,10 @@ spec:
           value: https://snippets.cdn.mozilla.net
         - name: CLUSTER_NAME
           value: "oregon-b"
-        - name: CSV_EXPORT_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: csv-export-root
-              name: snippets-admin-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-admin-secrets
-        - name: DEAD_MANS_SNITCH_CSV_EXPORT
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-csv-export
               name: snippets-admin-secrets
         - name: DEBUG
           value: "False"
@@ -63,7 +51,7 @@ spec:
             secretKeyRef:
               key: secret-key
               name: snippets-admin-secrets
-        image: mozorg/snippets:jupyter-e81a8bb9
+        image: mozorg/snippets:jupyter-9547a3c9
         imagePullPolicy: Always
         name: snippets-jupyter
         resources:
