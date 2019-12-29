@@ -25,20 +25,10 @@ spec:
               value: https://snippets.cdn.mozilla.net
             - name: CLUSTER_NAME
               value: "oregon-b"
-            - name: CSV_EXPORT_ROOT
-              valueFrom:
-                secretKeyRef:
-                  key: csv-export-root
-                  name: snippets-admin-secrets
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   key: database-url
-                  name: snippets-admin-secrets
-            - name: DEAD_MANS_SNITCH_CSV_EXPORT
-              valueFrom:
-                secretKeyRef:
-                  key: dead-mans-snitch-csv-export
                   name: snippets-admin-secrets
             - name: DEBUG
               value: "False"
