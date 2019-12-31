@@ -25,59 +25,18 @@ spec:
     spec:
       containers:
       - args:
-        - jupyter notebook --ip=0.0.0.0
-        # without the --ip=0.0.0.0 we get OSError: [Errno 99] Cannot assign requested address
-        #- ./manage.py shell_plus --notebook # OSError: [Errno 99] Cannot assign requested address
-        # need to find equivalent of --ip=0.0.0.0
-
+        - manage.py
+        - shell_plus
+        - --notebook
         command:
-        - /bin/bash
-        - -c 
+        - python
         env:
         - name: ALLOWED_HOSTS
           value: "*"
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              key: aws-access-key-id
-              name: snippets-dev-secrets
-        - name: AWS_S3_HOST
-          valueFrom:
-            secretKeyRef:
-              key: aws-s3-host
-              name: snippets-dev-secrets
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              key: aws-secret-access-key
-              name: snippets-dev-secrets
-        - name: AWS_STORAGE_BUCKET_NAME
-          valueFrom:
-            secretKeyRef:
-              key: aws-storage-bucket-name
-              name: snippets-dev-secrets
-        - name: BUNDLE_BROTLI_COMPRESS
-          value: "True"
-        - name: CACHALOT_ENABLED
-          value: "False"
-        - name: CACHE_URL
-          valueFrom:
-            secretKeyRef:
-              key: cache-url
-              name: snippets-dev-secrets
         - name: CDN_URL
           value: https://snippets.cdn.mozilla.net
         - name: CLUSTER_NAME
           value: "oregon-b"
-        - name: CSP_REPORT_ENABLE
-          value: "False"
-        - name: CSP_REPORT_ONLY
-          value: "True"
-        - name: CSV_EXPORT_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: csv-export-root
-              name: snippets-dev-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
@@ -87,62 +46,12 @@ spec:
           value: "False"
         - name: DJANGO_SETTINGS_MODULE
           value: snippets.settings
-        - name: ENABLE_ADMIN
-          value: "True"
-        - name: FILE_STORAGE
-          value: snippets.base.storage.S3Storage
-        - name: MEDIA_BUNDLES_ROOT
-          value: us-west/bundles/
-        - name: MEDIA_BUNDLES_PREGEN_ROOT
-          value: us-west/bundles-pregen/
-        - name: MEDIA_ICONS_ROOT
-          value: media/icons/
-        - name: METRICS_SAMPLE_RATE
-          value: "0.001"
-        - name: NEW_RELIC_APP_NAME
-          value: snippets-jupyter-oregon-b
-        - name: NEW_RELIC_LICENSE_KEY
-          valueFrom:
-            secretKeyRef:
-              key: new-relic-license-key
-              name: snippets-dev-secrets
-        - name: PROD_DETAILS_STORAGE
-          value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
               name: snippets-dev-secrets
-        - name: SECURE_BROWSER_XSS_FILTER
-          value: "True"
-        - name: SECURE_CONTENT_TYPE_NOSNIFF
-          value: "True"
-        - name: SECURE_HSTS_SECONDS
-          value: "31536000"
-        - name: SECURE_SSL_REDIRECT
-          value: "True"
-        - name: SENTRY_DSN
-          valueFrom:
-            secretKeyRef:
-              key: sentry-dsn
-              name: snippets-dev-secrets
-        - name: SENTRY_ENVIRONMENT
-          value: dev
-        - name: SITE_TITLE
-          value: Jupyter Development
-        - name: SITE_URL
-          value: https://jupyter.moz.works
-        - name: SNIPPET_BUNDLE_TIMEOUT
-          value: "1800"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: datadog-statsd.datadog.svc.cluster.local
-        - name: WSGI_KEEP_ALIVE
-          value: "90"
-        - name: WSGI_NUM_WORKERS
-          value: "2"
-        image: mozmeao/snippets:jupyter
+        image: mozmeao/snippets:jupyter-9547a3c9
         imagePullPolicy: IfNotPresent
         name: snippets-jupyter
         resources:
