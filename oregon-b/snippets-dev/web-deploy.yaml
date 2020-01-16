@@ -71,11 +71,6 @@ spec:
           value: "oregon-b"
         - name: CSP_REPORT_ONLY
           value: "True"
-        - name: CSV_EXPORT_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: csv-export-root
-              name: snippets-dev-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
