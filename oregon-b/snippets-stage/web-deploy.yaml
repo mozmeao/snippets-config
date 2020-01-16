@@ -73,11 +73,6 @@ spec:
           value: "False"
         - name: CSP_REPORT_ONLY
           value: "True"
-        - name: CSV_EXPORT_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: csv-export-root
-              name: snippets-stage-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:

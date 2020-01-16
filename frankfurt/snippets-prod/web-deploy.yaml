@@ -79,11 +79,6 @@ spec:
           value: "True"
         - name: CSRF_USE_SESSIONS
           value: "False"
-        - name: CSV_EXPORT_ROOT
-          valueFrom:
-            secretKeyRef:
-              key: csv-export-root
-              name: snippets-prod-secrets
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
