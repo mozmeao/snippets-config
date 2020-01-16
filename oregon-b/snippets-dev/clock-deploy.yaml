@@ -146,7 +146,7 @@ spec:
           value: datadog-statsd.datadog.svc.cluster.local
         - name: STATSD_PREFIX
           value: snippets-dev-oregon-b
-        image: mozorg/snippets:c160afbd
+        image: mozorg/snippets:086e1d77
         imagePullPolicy: IfNotPresent
         name: snippets-dev-clock
         resources: {}
