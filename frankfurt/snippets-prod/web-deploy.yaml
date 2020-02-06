@@ -154,6 +154,8 @@ spec:
           value: "True"
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
+        - name: NIGHTLY_INCLUDES_RELEASE
+          value: "True"
         image: mozorg/snippets:45f197c1
         imagePullPolicy: IfNotPresent
         name: snippets-prod
