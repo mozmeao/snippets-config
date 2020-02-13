@@ -51,7 +51,7 @@ spec:
             secretKeyRef:
               key: secret-key
               name: snippets-admin-secrets
-        image: mozorg/snippets:jupyter-ec7bdb64
+        image: mozorg/snippets:jupyter-7a5551ea
         imagePullPolicy: Always
         name: snippets-jupyter
         resources:
