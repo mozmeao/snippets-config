@@ -185,7 +185,7 @@ spec:
           value: us-west/bundles-pregen/
         - name: NIGHTLY_INCLUDES_RELEASE
           value: "True"
-        image: mozorg/snippets:2ac12245
+        image: mozorg/snippets:59fa4549
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
         livenessProbe:
