@@ -192,6 +192,8 @@ spec:
           value: media/icons/          
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/
+        - name: RATELIMIT_ENABLE
+          value: "True"
         image: mozorg/snippets:47d02aec
         imagePullPolicy: IfNotPresent
         name: snippets-stage
