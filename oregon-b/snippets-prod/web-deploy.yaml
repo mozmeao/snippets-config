@@ -162,7 +162,7 @@ spec:
           value: "True"          
         - name: RATELIMIT_ENABLE
           value: "True"
-        image: mozorg/snippets:43ba4114
+        image: mozorg/snippets:88f69478
         imagePullPolicy: IfNotPresent
         name: snippets-prod
         livenessProbe:
