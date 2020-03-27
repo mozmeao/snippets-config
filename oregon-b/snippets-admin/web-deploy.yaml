@@ -174,7 +174,11 @@ spec:
         - name: STATSD_CLIENT
           value: django_statsd.clients.normal
         - name: STATSD_HOST
-          value: datadog-statsd.datadog.svc.cluster.local
+          value: statsd-exporter-svc.statsdexporter
+        - name: STATSD_PORT
+          value: "9125"
+        - name: STATSD_PREFIX
+          value: snippets-admin
         - name: WSGI_KEEP_ALIVE
           value: "90"
         - name: WSGI_NUM_WORKERS
