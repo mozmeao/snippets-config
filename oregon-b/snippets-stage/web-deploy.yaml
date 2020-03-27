@@ -104,8 +104,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: MEDIA_ICONS_ROOT
-          value: "icons/"
         - name: METRICS_SAMPLE_RATE
           value: "1"
         - name: NEW_RELIC_APP_NAME
