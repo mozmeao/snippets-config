@@ -188,7 +188,7 @@ spec:
           value: media/icons/
         - name: MEDIA_BUNDLES_PREGEN_ROOT
           value: us-west/bundles-pregen/         
-        image: mozorg/snippets:e0affc7c
+        image: mozorg/snippets:ac928e4c
         imagePullPolicy: IfNotPresent
         name: snippets-stage-clock
         resources:
