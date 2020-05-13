@@ -164,7 +164,7 @@ spec:
           value: "True"          
         - name: RATELIMIT_ENABLE
           value: "True"
-        image: mozmeao/snippets:0910a3bf
+        image: mozmeao/snippets:1fd05de8
         imagePullPolicy: IfNotPresent
         name: snippets-prod
         livenessProbe:
