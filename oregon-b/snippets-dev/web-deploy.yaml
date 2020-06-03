@@ -151,7 +151,7 @@ spec:
           value: "9125"
         - name: STATSD_PREFIX
           value: snippets-dev
-        image: mozmeao/snippets:04562508
+        image: mozmeao/snippets:89c03c9f
         imagePullPolicy: IfNotPresent
         name: snippets-dev
         livenessProbe:
