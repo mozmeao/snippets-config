@@ -148,7 +148,7 @@ spec:
           value: snippets-dev
         - name: STATSD_PORT
           value: "9125"
-        image: mozmeao/snippets:5d62c22c
+        image: mozmeao/snippets:68a93303
         imagePullPolicy: IfNotPresent
         name: snippets-dev-clock
         resources: {}
