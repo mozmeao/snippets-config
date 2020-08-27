@@ -202,7 +202,7 @@ spec:
               name: snippets-admin-secrets
         - name: NIGHTLY_INCLUDES_RELEASE
           value: "True"       
-        image: mozmeao/snippets:d1fbeec8
+        image: mozmeao/snippets:2793ea14
         imagePullPolicy: IfNotPresent
         name: snippets-admin-web
         resources:
