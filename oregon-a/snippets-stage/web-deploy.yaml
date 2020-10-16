@@ -3,32 +3,35 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: snippets-dev
-    type: clock
-  name: snippets-dev-clock
-  namespace: snippets-dev
+    app: snippets-stage
+    type: web
+  name: snippets-stage
+  namespace: snippets-stage
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: snippets-dev
-      type: clock
+      app: snippets-stage
+      type: web
   strategy:
-    type: Recreate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: snippets-dev
-        type: clock
-      name: snippets-dev-clock
-      namespace: snippets-dev
+        app: snippets-stage
+        type: web
+      name: snippets-stage
+      namespace: snippets-stage
     spec:
       containers:
       - args:
-        - ./manage.py runscript cron
+        - ./bin/run-prod.sh
         command:
         - /bin/bash
         - -c
@@ -39,22 +42,22 @@ spec:
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: AWS_S3_HOST
           valueFrom:
             secretKeyRef:
               key: aws-s3-host
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               key: aws-storage-bucket-name
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: BUNDLE_BROTLI_COMPRESS
           value: "True"
         - name: CACHALOT_ENABLED
@@ -63,30 +66,34 @@ spec:
           valueFrom:
             secretKeyRef:
               key: cache-url
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: CLUSTER_NAME
-          value: "oregon-b"
+          value: "oregon-a"
+        - name: CSP_REPORT_ENABLE
+          value: "False"
         - name: CSP_REPORT_ONLY
           value: "True"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-disable-snippets
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-product-details
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: DEBUG
           value: "False"
         - name: ENABLE_ADMIN
           value: "True"
+        - name: ENFORCE_HOST
+          value: "snippets.allizom.org"
         - name: FILE_STORAGE
           value: snippets.base.storage.S3Storage
         - name: K8S_NAMESPACE
@@ -100,58 +107,113 @@ spec:
         - name: METRICS_SAMPLE_RATE
           value: "1"
         - name: NEW_RELIC_APP_NAME
-          value: snippets-dev-oregon-b
+          value: snippets-stage-oregon-a
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               key: new-relic-license-key
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: OIDC_ENABLE
-          value: "False"
+          value: "True"
+        - name: OIDC_OP_AUTHORIZATION_ENDPOINT
+          value: https://auth.mozilla.auth0.com/authorize
+        - name: OIDC_OP_TOKEN_ENDPOINT
+          value: https://auth.mozilla.auth0.com/oauth/token
+        - name: OIDC_OP_USER_ENDPOINT
+          value: https://auth.mozilla.auth0.com/userinfo
+        - name: OIDC_RP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-id
+              name: snippets-stage-secrets
+        - name: OIDC_RP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: oidc-rp-client-secret
+              name: snippets-stage-secrets
         - name: PROD_DETAILS_STORAGE
           value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: SECURE_BROWSER_XSS_FILTER
           value: "True"
         - name: SECURE_CONTENT_TYPE_NOSNIFF
           value: "True"
         - name: SECURE_HSTS_SECONDS
-          value: "3600"
+          value: "31536000"
         - name: SECURE_SSL_REDIRECT
           value: "True"
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
               key: sentry-dsn
-              name: snippets-dev-secrets
+              name: snippets-stage-secrets
         - name: SENTRY_ENVIRONMENT
-          value: dev
+          value: stage
         - name: SITE_HEADER
-          value: Snippets Administration Development
+          value: Snippets Administration Staging
         - name: SITE_TITLE
-          value: Mozilla Snippets Development Admin
+          value: Mozilla Snippets Staging Admin
         - name: SITE_URL
-          value: https://snippets-dev.oregon.moz.works
+          value: https://snippets.allizom.org
+        - name: SLACK_ENABLE
+          value: "True"
+        - name: SLACK_WEBHOOK
+          valueFrom:
+            secretKeyRef:
+              key: slack-webhook
+              name: snippets-stage-secrets
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
         - name: SNIPPET_HTTP_MAX_AGE
           value: "600"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: statsd-exporter-svc.statsdexporter
-        - name: STATSD_PREFIX
-          value: snippets-dev
-        - name: STATSD_PORT
-          value: "9125"
-        image: mozmeao/snippets:c938e21b
+        - name: WSGI_KEEP_ALIVE
+          value: "90"
+        - name: WSGI_NUM_WORKERS
+          value: "2"
+        - name: USE_PREGEN_BUNDLES
+          value: "True"
+        - name: CDN_URL
+          value: https://d177vs5g6znz6f.cloudfront.net
+        - name: MEDIA_BUNDLES_ROOT
+          value: us-west/bundles/
+        - name: MEDIA_ICONS_ROOT
+          value: media/icons/
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/
+        - name: RATELIMIT_ENABLE
+          value: "True"
+        image: mozmeao/snippets:8dcc8674
         imagePullPolicy: IfNotPresent
-        name: snippets-dev-clock
-        resources: {}
+        name: snippets-stage
+        livenessProbe:
+          failureThreshold: 4
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+          httpGet:
+            path: /healthz/
+            scheme: HTTP
+            port: 8000
+        readinessProbe:
+          failureThreshold: 1
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 8000
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: 250m
+            memory: 300Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst

@@ -75,7 +75,7 @@ spec:
         - name: CDN_URL
           value: https://snippets.cdn.mozilla.net
         - name: CLUSTER_NAME
-          value: "oregon-b"
+          value: "oregon-a"
         - name: CSP_REPORT_ENABLE
           value: "False"
         - name: CSP_REPORT_ONLY
@@ -110,7 +110,7 @@ spec:
         - name: METRICS_SAMPLE_RATE
           value: "0.001"
         - name: NEW_RELIC_APP_NAME
-          value: snippets-admin-oregon-b
+          value: snippets-admin-oregon-a
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:

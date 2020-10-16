@@ -4,34 +4,31 @@ metadata:
   creationTimestamp: null
   labels:
     app: snippets-stage
-    type: web
-  name: snippets-stage
+    type: clock
+  name: snippets-stage-clock
   namespace: snippets-stage
 spec:
   progressDeadlineSeconds: 600
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: snippets-stage
-      type: web
+      type: clock
   strategy:
-    rollingUpdate:
-      maxSurge: 3
-      maxUnavailable: 0
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
         app: snippets-stage
-        type: web
-      name: snippets-stage
+        type: clock
+      name: snippets-stage-clock
       namespace: snippets-stage
     spec:
       containers:
       - args:
-        - ./bin/run-prod.sh
+        - ./manage.py runscript cron
         command:
         - /bin/bash
         - -c
@@ -68,7 +65,7 @@ spec:
               key: cache-url
               name: snippets-stage-secrets
         - name: CLUSTER_NAME
-          value: "oregon-b"
+          value: "oregon-a"
         - name: CSP_REPORT_ENABLE
           value: "False"
         - name: CSP_REPORT_ONLY
@@ -87,6 +84,11 @@ spec:
           valueFrom:
             secretKeyRef:
               key: dead-mans-snitch-product-details
+              name: snippets-stage-secrets
+        - name: DEAD_MANS_SNITCH_UPDATE_JOBS
+          valueFrom:
+            secretKeyRef:
+              key: dead-mans-snitch-update-jobs
               name: snippets-stage-secrets
         - name: DEBUG
           value: "False"
@@ -107,7 +109,7 @@ spec:
         - name: METRICS_SAMPLE_RATE
           value: "1"
         - name: NEW_RELIC_APP_NAME
-          value: snippets-stage-oregon-b
+          value: snippets-stage-oregon-a
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
@@ -170,43 +172,25 @@ spec:
           value: "1800"
         - name: SNIPPET_HTTP_MAX_AGE
           value: "600"
+        - name: STATSD_CLIENT
+          value: django_statsd.clients.normal
+        - name: STATSD_HOST
+          value: statsd-exporter-svc.statsdexporter
+        - name: STATSD_PREFIX
+          value: snippets-stage
         - name: WSGI_KEEP_ALIVE
           value: "90"
         - name: WSGI_NUM_WORKERS
           value: "2"
-        - name: USE_PREGEN_BUNDLES
-          value: "True"
-        - name: CDN_URL
-          value: https://d177vs5g6znz6f.cloudfront.net
         - name: MEDIA_BUNDLES_ROOT
           value: us-west/bundles/
         - name: MEDIA_ICONS_ROOT
           value: media/icons/
         - name: MEDIA_BUNDLES_PREGEN_ROOT
-          value: us-west/bundles-pregen/
-        - name: RATELIMIT_ENABLE
-          value: "True"
+          value: us-west/bundles-pregen/         
         image: mozmeao/snippets:8dcc8674
         imagePullPolicy: IfNotPresent
-        name: snippets-stage
-        livenessProbe:
-          failureThreshold: 4
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 5
-          httpGet:
-            path: /healthz/
-            scheme: HTTP
-            port: 8000
-        readinessProbe:
-          failureThreshold: 1
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          successThreshold: 1
-          tcpSocket:
-            port: 8000
-          timeoutSeconds: 5
+        name: snippets-stage-clock
         resources:
           limits:
             cpu: "1"
