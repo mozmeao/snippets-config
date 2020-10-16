@@ -170,14 +170,6 @@ spec:
           value: "1800"
         - name: SNIPPET_HTTP_MAX_AGE
           value: "600"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: statsd-exporter-svc.statsdexporter
-        - name: STATSD_PORT
-          value: "9125"
-        - name: STATSD_PREFIX
-          value: snippets-stage
         - name: WSGI_KEEP_ALIVE
           value: "90"
         - name: WSGI_NUM_WORKERS

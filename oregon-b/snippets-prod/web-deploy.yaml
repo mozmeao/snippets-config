@@ -144,14 +144,6 @@ spec:
           value: https://snippets-prod.oregon-b.moz.works
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: statsd-exporter-svc.statsdexporter
-        - name: STATSD_PORT
-          value: "9125"
-        - name: STATSD_PREFIX
-          value: snippets-prod
         - name: WSGI_KEEP_ALIVE
           value: "90"
         - name: WSGI_NUM_WORKERS
