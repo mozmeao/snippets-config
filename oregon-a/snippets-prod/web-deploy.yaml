@@ -3,31 +3,31 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: snippets-dev
+    app: snippets-prod
     type: web
-  name: snippets-dev
-  namespace: snippets-dev
+  name: snippets-prod
+  namespace: snippets-prod
 spec:
   progressDeadlineSeconds: 600
-  replicas: 2
+  replicas: 6
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: snippets-dev
+      app: snippets-prod
       type: web
   strategy:
     rollingUpdate:
-      maxSurge: 2
+      maxSurge: 3
       maxUnavailable: 0
     type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: snippets-dev
+        app: snippets-prod
         type: web
-      name: snippets-dev
-      namespace: snippets-dev
+      name: snippets-prod
+      namespace: snippets-prod
     spec:
       containers:
       - args:
@@ -36,59 +36,64 @@ spec:
         - /bin/bash
         - -c
         env:
+        - name: ADMIN_REDIRECT_URL
+          value: https://snippets-admin.mozilla.org/
+        - name: ALLOWED_CIDR_NETS
+          valueFrom:
+            secretKeyRef:
+              key: allowed-cidr-nets
+              name: snippets-prod-secrets
         - name: ALLOWED_HOSTS
           value: "*"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: AWS_S3_HOST
           valueFrom:
             secretKeyRef:
               key: aws-s3-host
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               key: aws-storage-bucket-name
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: BUNDLE_BROTLI_COMPRESS
           value: "True"
-        - name: CACHALOT_ENABLED
-          value: "False"
+        - name: CACHALOT_TIMEOUT
+          value: "300"
         - name: CACHE_URL
           valueFrom:
             secretKeyRef:
               key: cache-url
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
+        - name: CDN_URL
+          value: https://snippets.cdn.mozilla.net
         - name: CLUSTER_NAME
-          value: "oregon-b"
+          value: "oregon-a"
+        - name: CSP_REPORT_ENABLE
+          value: "False"
         - name: CSP_REPORT_ONLY
           value: "True"
+        - name: CSRF_USE_SESSIONS
+          value: "False"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               key: database-url
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-disable-snippets
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-product-details
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: DEBUG
           value: "False"
         - name: ENABLE_ADMIN
+          value: "False"
+        - name: ENGAGE_ROBOTS
           value: "True"
         - name: FILE_STORAGE
           value: snippets.base.storage.S3Storage
@@ -100,60 +105,60 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: MEDIA_BUNDLES_ROOT
+          value: us-west/bundles/
+        - name: MEDIA_ICONS_ROOT
+          value: media/icons/
         - name: METRICS_SAMPLE_RATE
-          value: "1"
+          value: "0.001"
         - name: NEW_RELIC_APP_NAME
-          value: snippets-dev-oregon-b
+          value: snippets-prod-oregon-a
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               key: new-relic-license-key
-              name: snippets-dev-secrets
-        - name: OIDC_ENABLE
-          value: "False"
+              name: snippets-prod-secrets
         - name: PROD_DETAILS_STORAGE
           value: product_details.storage.PDDatabaseStorage
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: SECURE_BROWSER_XSS_FILTER
           value: "True"
         - name: SECURE_CONTENT_TYPE_NOSNIFF
           value: "True"
         - name: SECURE_HSTS_SECONDS
-          value: "3600"
+          value: "31536000"
         - name: SECURE_SSL_REDIRECT
           value: "True"
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
               key: sentry-dsn
-              name: snippets-dev-secrets
+              name: snippets-prod-secrets
         - name: SENTRY_ENVIRONMENT
-          value: dev
-        - name: SITE_HEADER
-          value: Snippets Administration Development
-        - name: SITE_TITLE
-          value: Mozilla Snippets Development Admin
+          value: production
         - name: SITE_URL
-          value: https://snippets-dev.oregon.moz.works
+          value: https://snippets-prod.oregon-a.moz.works
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
-        - name: SNIPPET_HTTP_MAX_AGE
-          value: "600"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: statsd-exporter-svc.statsdexporter
-        - name: STATSD_PORT
-          value: "9125"
-        - name: STATSD_PREFIX
-          value: snippets-dev
-        image: mozmeao/snippets:c0e52476
+        - name: WSGI_KEEP_ALIVE
+          value: "90"
+        - name: WSGI_NUM_WORKERS
+          value: "2"
+        - name: USE_PREGEN_BUNDLES
+          value: "True"
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: us-west/bundles-pregen/
+        - name: NIGHTLY_INCLUDES_RELEASE
+          value: "True"          
+        - name: RATELIMIT_ENABLE
+          value: "True"
+        image: mozmeao/snippets:8dcc8674
         imagePullPolicy: IfNotPresent
-        name: snippets-dev
+        name: snippets-prod
         livenessProbe:
           failureThreshold: 4
           initialDelaySeconds: 5
@@ -172,7 +177,13 @@ spec:
           tcpSocket:
             port: 8000
           timeoutSeconds: 5
-        resources: {}
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: 250m
+            memory: 300Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
