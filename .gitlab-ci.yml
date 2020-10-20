@@ -44,7 +44,7 @@ deploy oregon-a stage:
     refs:
       - master
 
-deploy oregon-b prod:
+deploy oregon-a prod:
   extends: .deploy
   variables:
     DEPLOYMENT: oregon-a/snippets-prod
@@ -73,7 +73,7 @@ deploy frankfurt prod:
 deploy oregon-a admin:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-b/snippets-admin
+    DEPLOYMENT: oregon-a/snippets-admin
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
     NEWRELIC_APP: snippets-admin-oregon-a
     URL: https://snippets-admin.mozilla.org
