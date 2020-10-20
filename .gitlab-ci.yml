@@ -18,42 +18,42 @@ stages:
     - sleep 5s
     - ./acceptance-tests.sh ${URL}
 
-deploy oregon-b dev:
+deploy oregon-a dev:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-b/snippets-dev
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-    NEWRELIC_APP: snippets-dev-oregon-b
+    DEPLOYMENT: oregon-a/snippets-dev
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
+    NEWRELIC_APP: snippets-dev-oregon-a
     URL: https://snippets-dev.oregon-b.moz.works
   only:
     changes:
-      - "oregon-b/snippets-dev/*"
+      - "oregon-a/snippets-dev/*"
     refs:
       - master
 
-deploy oregon-b stage:
+deploy oregon-a stage:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-b/snippets-stage
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-    NEWRELIC_APP: snippets-stage-oregon-b
+    DEPLOYMENT: oregon-a/snippets-stage
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
+    NEWRELIC_APP: snippets-stage-oregon-a
     URL: https://snippets.allizom.org
   only:
     changes:
-      - "oregon-b/snippets-stage/*"
+      - "oregon-a/snippets-stage/*"
     refs:
       - master
 
 deploy oregon-b prod:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-b/snippets-prod
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-    NEWRELIC_APP: snippets-prod-oregon-b
+    DEPLOYMENT: oregon-a/snippets-prod
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
+    NEWRELIC_APP: snippets-prod-oregon-a
     URL: https://snippets-prod.oregon-b.moz.works
   only:
     changes:
-      - "oregon-b/snippets-prod/*"
+      - "oregon-a/snippets-prod/*"
     refs:
       - master
 
@@ -70,15 +70,15 @@ deploy frankfurt prod:
     refs:
       - master
 
-deploy oregon-b admin:
+deploy oregon-a admin:
   extends: .deploy
   variables:
     DEPLOYMENT: oregon-b/snippets-admin
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-b.kubeconfig
-    NEWRELIC_APP: snippets-admin-oregon-b
+    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
+    NEWRELIC_APP: snippets-admin-oregon-a
     URL: https://snippets-admin.mozilla.org
   only:
     changes:
-      - "oregon-b/snippets-admin/*"
+      - "oregon-a/snippets-admin/*"
     refs:
       - master
