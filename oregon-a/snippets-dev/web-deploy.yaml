@@ -29,6 +29,8 @@ spec:
       name: snippets-dev
       namespace: snippets-dev
     spec:
+      imagePullSecrets:
+        - name: dockerhub-registry
       containers:
       - args:
         - ./bin/run-prod.sh

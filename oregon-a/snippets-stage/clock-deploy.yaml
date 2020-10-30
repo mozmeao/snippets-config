@@ -26,6 +26,8 @@ spec:
       name: snippets-stage-clock
       namespace: snippets-stage
     spec:
+      imagePullSecrets:
+        - name: dockerhub-registry
       containers:
       - args:
         - ./manage.py runscript cron
