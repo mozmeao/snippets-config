@@ -29,6 +29,8 @@ spec:
       name: snippets-stage
       namespace: snippets-stage
     spec:
+      imagePullSecrets:
+        - name: dockerhub-registry
       containers:
       - args:
         - ./bin/run-prod.sh

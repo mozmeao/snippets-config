@@ -26,6 +26,8 @@ spec:
       name: snippets-dev-clock
       namespace: snippets-dev
     spec:
+      imagePullSecrets:
+        - name: dockerhub-registry
       containers:
       - args:
         - ./manage.py runscript cron
