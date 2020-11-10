@@ -140,7 +140,7 @@ spec:
         - name: SITE_TITLE
           value: Mozilla Snippets Development Admin
         - name: SITE_URL
-          value: https://snippets-dev.oregon.moz.works
+          value: https://snippets-dev.oregon-b.moz.works
         - name: SNIPPET_BUNDLE_TIMEOUT
           value: "1800"
         - name: SNIPPET_HTTP_MAX_AGE
