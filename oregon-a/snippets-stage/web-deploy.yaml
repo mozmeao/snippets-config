@@ -176,8 +176,6 @@ spec:
           value: "90"
         - name: WSGI_NUM_WORKERS
           value: "2"
-        - name: USE_PREGEN_BUNDLES
-          value: "True"
         - name: CDN_URL
           value: https://d177vs5g6znz6f.cloudfront.net
         - name: MEDIA_BUNDLES_ROOT
