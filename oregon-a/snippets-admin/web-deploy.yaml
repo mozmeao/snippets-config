@@ -67,8 +67,6 @@ spec:
               name: snippets-admin-secrets
         - name: BUNDLE_BROTLI_COMPRESS
           value: "True"
-        - name: CACHALOT_ENABLED
-          value: "False"
         - name: CACHE_URL
           valueFrom:
             secretKeyRef:
