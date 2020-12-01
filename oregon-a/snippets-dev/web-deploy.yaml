@@ -32,128 +32,16 @@ spec:
       imagePullSecrets:
         - name: dockerhub-registry
       containers:
-      - args:
-        - ./bin/run-prod.sh
-        command:
-        - /bin/bash
-        - -c
+      - command:
+          - ./run-prod.sh
         env:
-        - name: ALLOWED_HOSTS
-          value: "*"
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              key: aws-access-key-id
-              name: snippets-dev-secrets
-        - name: AWS_S3_HOST
-          valueFrom:
-            secretKeyRef:
-              key: aws-s3-host
-              name: snippets-dev-secrets
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              key: aws-secret-access-key
-              name: snippets-dev-secrets
-        - name: AWS_STORAGE_BUCKET_NAME
-          valueFrom:
-            secretKeyRef:
-              key: aws-storage-bucket-name
-              name: snippets-dev-secrets
-        - name: BUNDLE_BROTLI_COMPRESS
-          value: "True"
-        - name: CACHALOT_ENABLED
-          value: "False"
-        - name: CACHE_URL
-          valueFrom:
-            secretKeyRef:
-              key: cache-url
-              name: snippets-dev-secrets
-        - name: CLUSTER_NAME
-          value: "oregon-a"
-        - name: CSP_REPORT_ONLY
-          value: "True"
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              key: database-url
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_DISABLE_SNIPPETS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-disable-snippets
-              name: snippets-dev-secrets
-        - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
-          valueFrom:
-            secretKeyRef:
-              key: dead-mans-snitch-product-details
-              name: snippets-dev-secrets
         - name: DEBUG
           value: "False"
-        - name: ENABLE_ADMIN
-          value: "True"
-        - name: FILE_STORAGE
-          value: snippets.base.storage.S3Storage
-        - name: K8S_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: K8S_POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: METRICS_SAMPLE_RATE
-          value: "1"
-        - name: NEW_RELIC_APP_NAME
-          value: snippets-dev-oregon-a
-        - name: NEW_RELIC_LICENSE_KEY
-          valueFrom:
-            secretKeyRef:
-              key: new-relic-license-key
-              name: snippets-dev-secrets
-        - name: OIDC_ENABLE
-          value: "False"
-        - name: PROD_DETAILS_STORAGE
-          value: product_details.storage.PDDatabaseStorage
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              key: secret-key
-              name: snippets-dev-secrets
-        - name: SECURE_BROWSER_XSS_FILTER
-          value: "True"
-        - name: SECURE_CONTENT_TYPE_NOSNIFF
-          value: "True"
-        - name: SECURE_HSTS_SECONDS
-          value: "3600"
-        - name: SECURE_SSL_REDIRECT
-          value: "True"
-        - name: SENTRY_DSN
-          valueFrom:
-            secretKeyRef:
-              key: sentry-dsn
-              name: snippets-dev-secrets
-        - name: SENTRY_ENVIRONMENT
-          value: dev
-        - name: SITE_HEADER
-          value: Snippets Administration Development
-        - name: SITE_TITLE
-          value: Mozilla Snippets Development Admin
-        - name: SITE_URL
-          value: https://snippets-dev.oregon-b.moz.works
-        - name: SNIPPET_BUNDLE_TIMEOUT
-          value: "1800"
-        - name: SNIPPET_HTTP_MAX_AGE
-          value: "600"
-        - name: STATSD_CLIENT
-          value: django_statsd.clients.normal
-        - name: STATSD_HOST
-          value: statsd-exporter-svc.statsdexporter
-        - name: STATSD_PORT
-          value: "9125"
-        - name: STATSD_PREFIX
-          value: snippets-dev
-        image: mozmeao/snippets:666f527e
+        - name: MEDIA_BUNDLES_PREGEN_ROOT
+          value: "bundles-pregen/"
+        - name: CDN_URL
+          value: "https://snippets.cdn.mozilla.net"
+        image:  mozmeao/snippets:redirector-666f527e
         imagePullPolicy: IfNotPresent
         name: snippets-dev
         livenessProbe:
