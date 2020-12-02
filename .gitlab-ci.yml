@@ -3,33 +3,29 @@ stages:
 
 .deploy:
   stage: deploy
-  retry:
-    max: 1  # Add one retry, especially for acceptance-tests
-    when: always
   tags:
     - aws
     - mozmeao
   script:
     - kubectl apply -f ${DEPLOYMENT}
-    - kubectl rollout status -f ${DEPLOYMENT}/web-deploy.yaml
+    - kubectl rollout status -f ${DEPLOYMENT}/web.yaml
     - ./newrelic-notify.sh
-    # Retry doesn't seem to work for now. Sleep a few seconds before running the
-    # tests.
     - sleep 5s
-    - ./acceptance-tests.sh ${URL}
+    - ${ACCEPTANCE_TESTS_BIN} ${URL}
 
-deploy oregon-a dev:
-  extends: .deploy
-  variables:
-    DEPLOYMENT: oregon-a/snippets-dev
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
-    NEWRELIC_APP: snippets-dev-oregon-a
-    URL: https://snippets-dev.oregon-b.moz.works
-  only:
-    changes:
-      - "oregon-a/snippets-dev/*"
-    refs:
-      - master
+# deploy oregon-a dev:
+#   extends: .deploy
+#   variables:
+#     DEPLOYMENT: oregon-a/snippets-dev
+#     KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
+#     NEWRELIC_APP: snippets-dev-oregon-a
+#     ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redictor.sh
+#     URL: https://snippets-dev.oregon-b.moz.works
+#   only:
+#     changes:
+#       - "oregon-a/snippets-dev/*"
+#     refs:
+#       - master
 
 deploy oregon-a stage:
   extends: .deploy
@@ -37,6 +33,7 @@ deploy oregon-a stage:
     DEPLOYMENT: oregon-a/snippets-stage
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
     NEWRELIC_APP: snippets-stage-oregon-a
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
     URL: https://snippets.allizom.org
   only:
     changes:
@@ -44,31 +41,34 @@ deploy oregon-a stage:
     refs:
       - master
 
-deploy oregon-a prod:
+deploy_oregon_eks_prod:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-a/snippets-prod
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
-    NEWRELIC_APP: snippets-prod-oregon-a
+    DEPLOYMENT: oregon-eks/snippets-prod
+    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
+    NEWRELIC_APP: snippets-prod-or-1
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
     URL: https://snippets-prod.oregon-b.moz.works
   only:
     changes:
-      - "oregon-a/snippets-prod/*"
+      - "oregon-eks/snippets-prod/*"
     refs:
       - master
 
-deploy frankfurt prod:
+deploy_frankfurt_eks_prod:
   extends: .deploy
   variables:
-    DEPLOYMENT: frankfurt/snippets-prod
-    KUBECONFIG: /home/gitlab-runner/.kube/frankfurt.kubeconfig
-    NEWRELIC_APP: snippets-prod-frankfurt
+    DEPLOYMENT: frankfurt-eks/snippets-prod
+    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
+    NEWRELIC_APP: snippets-prod-fr-1
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
     URL: https://snippets-prod.frankfurt.moz.works
   only:
     changes:
-      - "frankfurt/snippets-prod/*"
+      - "frankfurt-eks/snippets-prod/*"
     refs:
       - master
+
 
 deploy oregon-a admin:
   extends: .deploy
@@ -76,6 +76,7 @@ deploy oregon-a admin:
     DEPLOYMENT: oregon-a/snippets-admin
     KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
     NEWRELIC_APP: snippets-admin-oregon-a
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests.sh
     URL: https://snippets-admin.mozilla.org
   only:
     changes:
