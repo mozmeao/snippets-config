@@ -59,7 +59,7 @@ deploy_frankfurt_eks_prod:
   extends: .deploy
   variables:
     DEPLOYMENT: frankfurt-eks/snippets-prod
-    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
+    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-fr-1.kubeconfig
     NEWRELIC_APP: snippets-prod-fr-1
     ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
     URL: https://snippets-prod.frankfurt.moz.works
