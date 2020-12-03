@@ -47,7 +47,7 @@ deploy_oregon_eks_admin:
     DEPLOYMENT: oregon-eks/snippets-admin
     KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
     NEWRELIC_APP: snippets-admin-or-1
-    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests.sh
     URL: https://snippets-admin.mozilla.org
   only:
     changes:
