@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: snippets-prod
-  namespace: snippets-prod
+  name: snippets-stage
+  namespace: snippets-stage
   labels:
-    run: snippets-prod
+    run: snippets-stage
   annotations:
      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-central-1:236517346949:certificate/148dc9eb-d026-4c09-89db-41bafd3f2077
-     external-dns.alpha.kubernetes.io/hostname: snippets-prod.frankfurt.moz.works.
+     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:236517346949:certificate/6c8ca0be-8082-4587-9f19-42db2603d593
+     external-dns.alpha.kubernetes.io/hostname: snippets-stage.oregon-b.moz.works.
 spec:
   type: LoadBalancer
   ports:
@@ -16,4 +16,4 @@ spec:
     targetPort: 8000
     protocol: TCP
   selector:
-    app: snippets-prod
+    app: snippets-stage

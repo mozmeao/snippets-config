@@ -27,17 +27,31 @@ stages:
 #     refs:
 #       - master
 
-deploy oregon-a stage:
+deploy_oregon_eks_stage:
   extends: .deploy
   variables:
-    DEPLOYMENT: oregon-a/snippets-stage
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
-    NEWRELIC_APP: snippets-stage-oregon-a
-    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
+    DEPLOYMENT: oregon-eks/snippets-stage
+    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
+    NEWRELIC_APP: snippets-stage-or-1
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests.sh
     URL: https://snippets.allizom.org
   only:
     changes:
-      - "oregon-a/snippets-stage/*"
+      - "oregon-eks/snippets-stage/*"
+    refs:
+      - master
+
+deploy_oregon_eks_admin:
+  extends: .deploy
+  variables:
+    DEPLOYMENT: oregon-eks/snippets-admin
+    KUBECONFIG: /home/gitlab-runner/.kube/mozmeao-or-1.kubeconfig
+    NEWRELIC_APP: snippets-admin-or-1
+    ACCEPTANCE_TESTS_BIN: ./acceptance-tests-redirector.sh
+    URL: https://snippets-admin.mozilla.org
+  only:
+    changes:
+      - "oregon-eks/snippets-admin/*"
     refs:
       - master
 
@@ -69,17 +83,3 @@ deploy_frankfurt_eks_prod:
     refs:
       - master
 
-
-deploy oregon-a admin:
-  extends: .deploy
-  variables:
-    DEPLOYMENT: oregon-a/snippets-admin
-    KUBECONFIG: /home/gitlab-runner/.kube/oregon-a.kubeconfig
-    NEWRELIC_APP: snippets-admin-oregon-a
-    ACCEPTANCE_TESTS_BIN: ./acceptance-tests.sh
-    URL: https://snippets-admin.mozilla.org
-  only:
-    changes:
-      - "oregon-a/snippets-admin/*"
-    refs:
-      - master

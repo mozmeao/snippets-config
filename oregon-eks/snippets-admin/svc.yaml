@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: snippets-admin
+  namespace: snippets-admin
+  labels:
+    run: snippets-admin
+  annotations:
+     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:236517346949:certificate/95897544-d03f-496c-9b60-9c20be4e0696
+     external-dns.alpha.kubernetes.io/hostname: snippets-admin.moz.works.
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 443
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: snippets-admin

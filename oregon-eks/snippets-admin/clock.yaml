@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: snippets-admin
+    type: clock
+  name: snippets-admin-clock
+  namespace: snippets-admin
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: snippets-admin
+      type: clock
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: snippets-admin
+        type: clock
+      name: snippets-admin-clock
+      namespace: snippets-admin
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-registry
+      containers:
+      - args:
+          - ./manage.py runscript cron
+        command:
+          - /bin/bash
+          - -c
+        env:
+          - name: ALLOWED_HOSTS
+            value: "*"
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                key: aws-access-key-id
+                name: snippets-admin-secrets
+          - name: AWS_S3_HOST
+            value: "s3-us-west-2.amazonaws.com"
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: aws-secret-access-key
+                name: snippets-admin-secrets
+          - name: AWS_STORAGE_BUCKET_NAME
+            value: "snippets-prod-us-west"
+          - name: BUNDLE_BROTLI_COMPRESS
+            value: "True"
+          - name: CACHE_URL
+            valueFrom:
+              secretKeyRef:
+                key: cache-url
+                name: snippets-admin-secrets
+          - name: CDN_URL
+            value: https://snippets.cdn.mozilla.net
+          - name: CLUSTER_NAME
+            value: "oregon"
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                key: database-url
+                name: snippets-admin-secrets
+          - name: DEAD_MANS_SNITCH_PRODUCT_DETAILS
+            valueFrom:
+              secretKeyRef:
+                key: dead-mans-snitch-product-details
+                name: snippets-admin-secrets
+          - name: DEAD_MANS_SNITCH_UPDATE_JOBS
+            valueFrom:
+              secretKeyRef:
+                key: dead-mans-snitch-update-jobs
+                name: snippets-admin-secrets
+          - name: DEAD_MANS_SNITCH_FETCH_METRICS
+            valueFrom:
+              secretKeyRef:
+                key: dead-mans-snitch-fetch-metrics
+                name: snippets-admin-secrets
+          - name: DEAD_MANS_SNITCH_FETCH_DAILY_METRICS
+            valueFrom:
+              secretKeyRef:
+                key: dead-mans-snitch-fetch-daily-metrics
+                name: snippets-admin-secrets
+          - name: DEBUG
+            value: "False"
+          - name: FILE_STORAGE
+            value: snippets.base.storage.S3Storage
+          - name: MEDIA_BUNDLES_PREGEN_ROOT
+            value: us-west/bundles-pregen/
+          - name: MEDIA_ICONS_ROOT
+            value: media/icons/
+          - name: NEW_RELIC_APP_NAME
+            value: snippets-admin-oregon-a
+          - name: NEW_RELIC_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                key: new-relic-license-key
+                name: snippets-admin-secrets
+          - name: PROD_DETAILS_STORAGE
+            value: product_details.storage.PDDatabaseStorage
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                key: secret-key
+                name: snippets-admin-secrets
+          - name: SENTRY_DSN
+            valueFrom:
+              secretKeyRef:
+                key: sentry-dsn
+                name: snippets-admin-secrets
+          - name: SENTRY_ENVIRONMENT
+            value: prod-admin
+          - name: SLACK_ENABLE
+            value: "True"
+          - name: SLACK_WEBHOOK
+            valueFrom:
+              secretKeyRef:
+                key: slack-webhook
+                name: snippets-admin-secrets
+          - name: REDASH_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: redash-api-key
+                name: snippets-admin-secrets
+        image: mozmeao/snippets:1e7907ee
+        imagePullPolicy: IfNotPresent
+        name: snippets-stage
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: 250m
+            memory: 300Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
