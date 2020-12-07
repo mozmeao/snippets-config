@@ -45,6 +45,10 @@ spec:
           - name: AWS_S3_HOST
             value: "s3-us-west-2.amazonaws.com"
           - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: aws-secret-access-key
+                name: snippets-admin-secrets
           - name: AWS_STORAGE_BUCKET_NAME
             value: "snippets-prod-us-west"
           - name: BUNDLE_BROTLI_COMPRESS
