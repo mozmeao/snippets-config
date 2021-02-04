@@ -128,7 +128,7 @@ spec:
               secretKeyRef:
                 key: redash-api-key
                 name: snippets-admin-secrets
-        image: mozmeao/snippets:7d7a4db9
+        image: mozmeao/snippets:7c0c2587
         imagePullPolicy: IfNotPresent
         name: snippets-stage
         resources:
