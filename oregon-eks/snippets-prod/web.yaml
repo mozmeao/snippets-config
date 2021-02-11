@@ -55,7 +55,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-        image: mozmeao/snippets:redirector-7c0c2587
+        image: mozmeao/snippets:redirector-46aac7f3
         imagePullPolicy: IfNotPresent
         name: snippets-prod
         livenessProbe:
