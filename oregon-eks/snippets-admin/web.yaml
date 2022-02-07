@@ -151,7 +151,7 @@ spec:
             value: us-west/bundles-pregen/
           - name: RATELIMIT_ENABLE
             value: "True"
-        image: mozmeao/snippets:46aac7f3
+        image: mozmeao/snippets:c091784b
         imagePullPolicy: IfNotPresent
         name: snippets-admin
         livenessProbe:
